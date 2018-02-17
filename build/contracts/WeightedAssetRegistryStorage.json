@@ -1,0 +1,220 @@
+{
+  "contractName": "WeightedAssetRegistryStorage",
+  "abi": [],
+  "bytecode": "0x60606040523415600e57600080fd5b603580601b6000396000f3006060604052600080fd00a165627a7a72305820cc45d551b14e83f17d5becb867e362a7abbcdba1edd17e78d1c066f290eab1dc0029",
+  "deployedBytecode": "0x6060604052600080fd00a165627a7a72305820cc45d551b14e83f17d5becb867e362a7abbcdba1edd17e78d1c066f290eab1dc0029",
+  "sourceMap": "64:406:20:-;;;;;;;;;;;;;;;;;",
+  "deployedSourceMap": "64:406:20:-;;;;;",
+  "source": "pragma solidity ^0.4.18;\n\nimport './AssetRegistryStorage.sol';\n\ncontract WeightedAssetRegistryStorage is AssetRegistryStorage {\n\n  /**\n   * Stores the total weight of assets managed by this registry\n   */\n  uint256 internal _weight;\n\n  /**\n   * Stores the weight owned by a given asset\n   */\n  mapping(uint256 => uint64) internal _weightOfAsset;\n\n  /**\n   * Stores the total weight owned by a given account\n   */\n  mapping(address => uint256) internal _weightOfHolder;\n}\n",
+  "sourcePath": "/home/hayek/proj/igave-crowdsale/contracts/dar/WeightedAssetRegistryStorage.sol",
+  "ast": {
+    "attributes": {
+      "absolutePath": "/home/hayek/proj/igave-crowdsale/contracts/dar/WeightedAssetRegistryStorage.sol",
+      "exportedSymbols": {
+        "WeightedAssetRegistryStorage": [
+          3758
+        ]
+      }
+    },
+    "children": [
+      {
+        "attributes": {
+          "literals": [
+            "solidity",
+            "^",
+            "0.4",
+            ".18"
+          ]
+        },
+        "id": 3744,
+        "name": "PragmaDirective",
+        "src": "0:24:20"
+      },
+      {
+        "attributes": {
+          "SourceUnit": 2096,
+          "absolutePath": "/home/hayek/proj/igave-crowdsale/contracts/dar/AssetRegistryStorage.sol",
+          "file": "./AssetRegistryStorage.sol",
+          "scope": 3759,
+          "symbolAliases": [
+            null
+          ],
+          "unitAlias": ""
+        },
+        "id": 3745,
+        "name": "ImportDirective",
+        "src": "26:36:20"
+      },
+      {
+        "attributes": {
+          "contractDependencies": [
+            2095
+          ],
+          "contractKind": "contract",
+          "documentation": null,
+          "fullyImplemented": true,
+          "linearizedBaseContracts": [
+            3758,
+            2095
+          ],
+          "name": "WeightedAssetRegistryStorage",
+          "scope": 3759
+        },
+        "children": [
+          {
+            "attributes": {
+              "arguments": [
+                null
+              ]
+            },
+            "children": [
+              {
+                "attributes": {
+                  "contractScope": null,
+                  "name": "AssetRegistryStorage",
+                  "referencedDeclaration": 2095,
+                  "type": "contract AssetRegistryStorage"
+                },
+                "id": 3746,
+                "name": "UserDefinedTypeName",
+                "src": "105:20:20"
+              }
+            ],
+            "id": 3747,
+            "name": "InheritanceSpecifier",
+            "src": "105:20:20"
+          },
+          {
+            "attributes": {
+              "constant": false,
+              "name": "_weight",
+              "scope": 3758,
+              "stateVariable": true,
+              "storageLocation": "default",
+              "type": "uint256",
+              "value": null,
+              "visibility": "internal"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "name": "uint256",
+                  "type": "uint256"
+                },
+                "id": 3748,
+                "name": "ElementaryTypeName",
+                "src": "207:7:20"
+              }
+            ],
+            "id": 3749,
+            "name": "VariableDeclaration",
+            "src": "207:24:20"
+          },
+          {
+            "attributes": {
+              "constant": false,
+              "name": "_weightOfAsset",
+              "scope": 3758,
+              "stateVariable": true,
+              "storageLocation": "default",
+              "type": "mapping(uint256 => uint64)",
+              "value": null,
+              "visibility": "internal"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "type": "mapping(uint256 => uint64)"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "uint256",
+                      "type": "uint256"
+                    },
+                    "id": 3750,
+                    "name": "ElementaryTypeName",
+                    "src": "302:7:20"
+                  },
+                  {
+                    "attributes": {
+                      "name": "uint64",
+                      "type": "uint64"
+                    },
+                    "id": 3751,
+                    "name": "ElementaryTypeName",
+                    "src": "313:6:20"
+                  }
+                ],
+                "id": 3752,
+                "name": "Mapping",
+                "src": "294:26:20"
+              }
+            ],
+            "id": 3753,
+            "name": "VariableDeclaration",
+            "src": "294:50:20"
+          },
+          {
+            "attributes": {
+              "constant": false,
+              "name": "_weightOfHolder",
+              "scope": 3758,
+              "stateVariable": true,
+              "storageLocation": "default",
+              "type": "mapping(address => uint256)",
+              "value": null,
+              "visibility": "internal"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "type": "mapping(address => uint256)"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "address",
+                      "type": "address"
+                    },
+                    "id": 3754,
+                    "name": "ElementaryTypeName",
+                    "src": "423:7:20"
+                  },
+                  {
+                    "attributes": {
+                      "name": "uint256",
+                      "type": "uint256"
+                    },
+                    "id": 3755,
+                    "name": "ElementaryTypeName",
+                    "src": "434:7:20"
+                  }
+                ],
+                "id": 3756,
+                "name": "Mapping",
+                "src": "415:27:20"
+              }
+            ],
+            "id": 3757,
+            "name": "VariableDeclaration",
+            "src": "415:52:20"
+          }
+        ],
+        "id": 3758,
+        "name": "ContractDefinition",
+        "src": "64:406:20"
+      }
+    ],
+    "id": 3759,
+    "name": "SourceUnit",
+    "src": "0:471:20"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.4.19+commit.c4cbbb05.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "1.0.1",
+  "updatedAt": "2018-02-15T06:34:56.878Z"
+}

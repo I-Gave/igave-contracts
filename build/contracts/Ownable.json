@@ -16,20 +16,6 @@
       "type": "function"
     },
     {
-      "constant": false,
-      "inputs": [
-        {
-          "name": "newOwner",
-          "type": "address"
-        }
-      ],
-      "name": "transferOwnership",
-      "outputs": [],
-      "payable": false,
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
       "inputs": [],
       "payable": false,
       "stateMutability": "nonpayable",
@@ -51,20 +37,34 @@
       ],
       "name": "OwnershipTransferred",
       "type": "event"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "newOwner",
+          "type": "address"
+        }
+      ],
+      "name": "transferOwnership",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
     }
   ],
-  "bytecode": "0x6060604052341561000f57600080fd5b336000806101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff1602179055506102858061005e6000396000f30060606040526004361061004c576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff1680638da5cb5b14610051578063f2fde38b146100a6575b600080fd5b341561005c57600080fd5b6100646100df565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b34156100b157600080fd5b6100dd600480803573ffffffffffffffffffffffffffffffffffffffff16906020019091905050610104565b005b6000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1681565b6000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff163373ffffffffffffffffffffffffffffffffffffffff1614151561015f57600080fd5b600073ffffffffffffffffffffffffffffffffffffffff168173ffffffffffffffffffffffffffffffffffffffff161415151561019b57600080fd5b8073ffffffffffffffffffffffffffffffffffffffff166000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff167f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e060405160405180910390a3806000806101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff160217905550505600a165627a7a723058208ab4ab9f77bfb60c44316201139af2d98bd22e1dc22e2237c58e2176604472700029",
-  "deployedBytecode": "0x60606040526004361061004c576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff1680638da5cb5b14610051578063f2fde38b146100a6575b600080fd5b341561005c57600080fd5b6100646100df565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b34156100b157600080fd5b6100dd600480803573ffffffffffffffffffffffffffffffffffffffff16906020019091905050610104565b005b6000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1681565b6000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff163373ffffffffffffffffffffffffffffffffffffffff1614151561015f57600080fd5b600073ffffffffffffffffffffffffffffffffffffffff168173ffffffffffffffffffffffffffffffffffffffff161415151561019b57600080fd5b8073ffffffffffffffffffffffffffffffffffffffff166000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff167f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e060405160405180910390a3806000806101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff160217905550505600a165627a7a723058208ab4ab9f77bfb60c44316201139af2d98bd22e1dc22e2237c58e2176604472700029",
-  "sourceMap": "216:787:15:-;;;468:55;;;;;;;;508:10;500:5;;:18;;;;;;;;;;;;;;;;;;216:787;;;;;;",
-  "deployedSourceMap": "216:787:15:-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;237:20;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;831:169;;;;;;;;;;;;;;;;;;;;;;;;;;;;237:20;;;;;;;;;;;;;:::o;831:169::-;652:5;;;;;;;;;;;638:19;;:10;:19;;;630:28;;;;;;;;927:1;907:22;;:8;:22;;;;899:31;;;;;;;;964:8;936:37;;957:5;;;;;;;;;;;936:37;;;;;;;;;;;;987:8;979:5;;:16;;;;;;;;;;;;;;;;;;831:169;:::o",
-  "source": "pragma solidity 0.4.18;\n\n\n/**\n * @title Ownable\n * @dev The Ownable contract has an owner address, and provides basic authorization control\n * functions, this simplifies the implementation of \"user permissions\".\n */\ncontract Ownable {\n  address public owner;\n\n\n  event OwnershipTransferred(address indexed previousOwner, address indexed newOwner);\n\n\n  /**\n   * @dev The Ownable constructor sets the original `owner` of the contract to the sender\n   * account.\n   */\n  function Ownable() public {\n    owner = msg.sender;\n  }\n\n  /**\n   * @dev Throws if called by any account other than the owner.\n   */\n  modifier onlyOwner() {\n    require(msg.sender == owner);\n    _;\n  }\n\n  /**\n   * @dev Allows the current owner to transfer control of the contract to a newOwner.\n   * @param newOwner The address to transfer ownership to.\n   */\n  function transferOwnership(address newOwner) public onlyOwner {\n    require(newOwner != address(0));\n    OwnershipTransferred(owner, newOwner);\n    owner = newOwner;\n  }\n\n}",
+  "bytecode": "0x6060604052341561000f57600080fd5b336000806101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff1602179055506102858061005e6000396000f30060606040526004361061004c576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff1680638da5cb5b14610051578063f2fde38b146100a6575b600080fd5b341561005c57600080fd5b6100646100df565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b34156100b157600080fd5b6100dd600480803573ffffffffffffffffffffffffffffffffffffffff16906020019091905050610104565b005b6000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1681565b6000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff163373ffffffffffffffffffffffffffffffffffffffff1614151561015f57600080fd5b600073ffffffffffffffffffffffffffffffffffffffff168173ffffffffffffffffffffffffffffffffffffffff161415151561019b57600080fd5b8073ffffffffffffffffffffffffffffffffffffffff166000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff167f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e060405160405180910390a3806000806101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff160217905550505600a165627a7a72305820ba72ec63aeab260675ec7f195a4c4ebc04c2aecb40fe8555825581124405514a0029",
+  "deployedBytecode": "0x60606040526004361061004c576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff1680638da5cb5b14610051578063f2fde38b146100a6575b600080fd5b341561005c57600080fd5b6100646100df565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b34156100b157600080fd5b6100dd600480803573ffffffffffffffffffffffffffffffffffffffff16906020019091905050610104565b005b6000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1681565b6000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff163373ffffffffffffffffffffffffffffffffffffffff1614151561015f57600080fd5b600073ffffffffffffffffffffffffffffffffffffffff168173ffffffffffffffffffffffffffffffffffffffff161415151561019b57600080fd5b8073ffffffffffffffffffffffffffffffffffffffff166000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff167f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e060405160405180910390a3806000806101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff160217905550505600a165627a7a72305820ba72ec63aeab260675ec7f195a4c4ebc04c2aecb40fe8555825581124405514a0029",
+  "sourceMap": "216:787:28:-;;;468:55;;;;;;;;508:10;500:5;;:18;;;;;;;;;;;;;;;;;;216:787;;;;;;",
+  "deployedSourceMap": "216:787:28:-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;237:20;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;831:169;;;;;;;;;;;;;;;;;;;;;;;;;;;;237:20;;;;;;;;;;;;;:::o;831:169::-;652:5;;;;;;;;;;;638:19;;:10;:19;;;630:28;;;;;;;;927:1;907:22;;:8;:22;;;;899:31;;;;;;;;964:8;936:37;;957:5;;;;;;;;;;;936:37;;;;;;;;;;;;987:8;979:5;;:16;;;;;;;;;;;;;;;;;;831:169;:::o",
+  "source": "pragma solidity 0.4.19;\n\n\n/**\n * @title Ownable\n * @dev The Ownable contract has an owner address, and provides basic authorization control\n * functions, this simplifies the implementation of \"user permissions\".\n */\ncontract Ownable {\n  address public owner;\n\n\n  event OwnershipTransferred(address indexed previousOwner, address indexed newOwner);\n\n\n  /**\n   * @dev The Ownable constructor sets the original `owner` of the contract to the sender\n   * account.\n   */\n  function Ownable() public {\n    owner = msg.sender;\n  }\n\n  /**\n   * @dev Throws if called by any account other than the owner.\n   */\n  modifier onlyOwner() {\n    require(msg.sender == owner);\n    _;\n  }\n\n  /**\n   * @dev Allows the current owner to transfer control of the contract to a newOwner.\n   * @param newOwner The address to transfer ownership to.\n   */\n  function transferOwnership(address newOwner) public onlyOwner {\n    require(newOwner != address(0));\n    OwnershipTransferred(owner, newOwner);\n    owner = newOwner;\n  }\n\n}",
   "sourcePath": "/home/hayek/proj/igave-crowdsale/contracts/util/Ownable.sol",
   "ast": {
     "attributes": {
       "absolutePath": "/home/hayek/proj/igave-crowdsale/contracts/util/Ownable.sol",
       "exportedSymbols": {
         "Ownable": [
-          1536
+          4559
         ]
       }
     },
@@ -74,12 +74,12 @@
           "literals": [
             "solidity",
             "0.4",
-            ".18"
+            ".19"
           ]
         },
-        "id": 1482,
+        "id": 4505,
         "name": "PragmaDirective",
-        "src": "0:23:15"
+        "src": "0:23:28"
       },
       {
         "attributes": {
@@ -93,17 +93,17 @@
           "documentation": "@title Ownable\n@dev The Ownable contract has an owner address, and provides basic authorization control\nfunctions, this simplifies the implementation of \"user permissions\".",
           "fullyImplemented": true,
           "linearizedBaseContracts": [
-            1536
+            4559
           ],
           "name": "Ownable",
-          "scope": 1537
+          "scope": 4560
         },
         "children": [
           {
             "attributes": {
               "constant": false,
               "name": "owner",
-              "scope": 1536,
+              "scope": 4559,
               "stateVariable": true,
               "storageLocation": "default",
               "type": "address",
@@ -116,14 +116,14 @@
                   "name": "address",
                   "type": "address"
                 },
-                "id": 1483,
+                "id": 4506,
                 "name": "ElementaryTypeName",
-                "src": "237:7:15"
+                "src": "237:7:28"
               }
             ],
-            "id": 1484,
+            "id": 4507,
             "name": "VariableDeclaration",
-            "src": "237:20:15"
+            "src": "237:20:28"
           },
           {
             "attributes": {
@@ -138,7 +138,7 @@
                       "constant": false,
                       "indexed": true,
                       "name": "previousOwner",
-                      "scope": 1490,
+                      "scope": 4513,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "address",
@@ -151,21 +151,21 @@
                           "name": "address",
                           "type": "address"
                         },
-                        "id": 1485,
+                        "id": 4508,
                         "name": "ElementaryTypeName",
-                        "src": "290:7:15"
+                        "src": "290:7:28"
                       }
                     ],
-                    "id": 1486,
+                    "id": 4509,
                     "name": "VariableDeclaration",
-                    "src": "290:29:15"
+                    "src": "290:29:28"
                   },
                   {
                     "attributes": {
                       "constant": false,
                       "indexed": true,
                       "name": "newOwner",
-                      "scope": 1490,
+                      "scope": 4513,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "address",
@@ -178,24 +178,24 @@
                           "name": "address",
                           "type": "address"
                         },
-                        "id": 1487,
+                        "id": 4510,
                         "name": "ElementaryTypeName",
-                        "src": "321:7:15"
+                        "src": "321:7:28"
                       }
                     ],
-                    "id": 1488,
+                    "id": 4511,
                     "name": "VariableDeclaration",
-                    "src": "321:24:15"
+                    "src": "321:24:28"
                   }
                 ],
-                "id": 1489,
+                "id": 4512,
                 "name": "ParameterList",
-                "src": "289:57:15"
+                "src": "289:57:28"
               }
             ],
-            "id": 1490,
+            "id": 4513,
             "name": "EventDefinition",
-            "src": "263:84:15"
+            "src": "263:84:28"
           },
           {
             "attributes": {
@@ -207,7 +207,7 @@
               ],
               "name": "Ownable",
               "payable": false,
-              "scope": 1536,
+              "scope": 4559,
               "stateMutability": "nonpayable",
               "superFunction": null,
               "visibility": "public"
@@ -220,9 +220,9 @@
                   ]
                 },
                 "children": [],
-                "id": 1491,
+                "id": 4514,
                 "name": "ParameterList",
-                "src": "484:2:15"
+                "src": "484:2:28"
               },
               {
                 "attributes": {
@@ -231,9 +231,9 @@
                   ]
                 },
                 "children": [],
-                "id": 1492,
+                "id": 4515,
                 "name": "ParameterList",
-                "src": "494:0:15"
+                "src": "494:0:28"
               },
               {
                 "children": [
@@ -256,13 +256,13 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 1484,
+                              "referencedDeclaration": 4507,
                               "type": "address",
                               "value": "owner"
                             },
-                            "id": 1493,
+                            "id": 4516,
                             "name": "Identifier",
-                            "src": "500:5:15"
+                            "src": "500:5:28"
                           },
                           {
                             "attributes": {
@@ -282,38 +282,38 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 1646,
+                                  "referencedDeclaration": 5011,
                                   "type": "msg",
                                   "value": "msg"
                                 },
-                                "id": 1494,
+                                "id": 4517,
                                 "name": "Identifier",
-                                "src": "508:3:15"
+                                "src": "508:3:28"
                               }
                             ],
-                            "id": 1495,
+                            "id": 4518,
                             "name": "MemberAccess",
-                            "src": "508:10:15"
+                            "src": "508:10:28"
                           }
                         ],
-                        "id": 1496,
+                        "id": 4519,
                         "name": "Assignment",
-                        "src": "500:18:15"
+                        "src": "500:18:28"
                       }
                     ],
-                    "id": 1497,
+                    "id": 4520,
                     "name": "ExpressionStatement",
-                    "src": "500:18:15"
+                    "src": "500:18:28"
                   }
                 ],
-                "id": 1498,
+                "id": 4521,
                 "name": "Block",
-                "src": "494:29:15"
+                "src": "494:29:28"
               }
             ],
-            "id": 1499,
+            "id": 4522,
             "name": "FunctionDefinition",
-            "src": "468:55:15"
+            "src": "468:55:28"
           },
           {
             "attributes": {
@@ -328,9 +328,9 @@
                   ]
                 },
                 "children": [],
-                "id": 1500,
+                "id": 4523,
                 "name": "ParameterList",
-                "src": "621:2:15"
+                "src": "621:2:28"
               },
               {
                 "children": [
@@ -362,13 +362,13 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 1649,
+                              "referencedDeclaration": 5014,
                               "type": "function (bool) pure",
                               "value": "require"
                             },
-                            "id": 1501,
+                            "id": 4524,
                             "name": "Identifier",
-                            "src": "630:7:15"
+                            "src": "630:7:28"
                           },
                           {
                             "attributes": {
@@ -403,18 +403,18 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 1646,
+                                      "referencedDeclaration": 5011,
                                       "type": "msg",
                                       "value": "msg"
                                     },
-                                    "id": 1502,
+                                    "id": 4525,
                                     "name": "Identifier",
-                                    "src": "638:3:15"
+                                    "src": "638:3:28"
                                   }
                                 ],
-                                "id": 1503,
+                                "id": 4526,
                                 "name": "MemberAccess",
-                                "src": "638:10:15"
+                                "src": "638:10:28"
                               },
                               {
                                 "attributes": {
@@ -422,43 +422,43 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 1484,
+                                  "referencedDeclaration": 4507,
                                   "type": "address",
                                   "value": "owner"
                                 },
-                                "id": 1504,
+                                "id": 4527,
                                 "name": "Identifier",
-                                "src": "652:5:15"
+                                "src": "652:5:28"
                               }
                             ],
-                            "id": 1505,
+                            "id": 4528,
                             "name": "BinaryOperation",
-                            "src": "638:19:15"
+                            "src": "638:19:28"
                           }
                         ],
-                        "id": 1506,
+                        "id": 4529,
                         "name": "FunctionCall",
-                        "src": "630:28:15"
+                        "src": "630:28:28"
                       }
                     ],
-                    "id": 1507,
+                    "id": 4530,
                     "name": "ExpressionStatement",
-                    "src": "630:28:15"
+                    "src": "630:28:28"
                   },
                   {
-                    "id": 1508,
+                    "id": 4531,
                     "name": "PlaceholderStatement",
-                    "src": "664:1:15"
+                    "src": "664:1:28"
                   }
                 ],
-                "id": 1509,
+                "id": 4532,
                 "name": "Block",
-                "src": "624:46:15"
+                "src": "624:46:28"
               }
             ],
-            "id": 1510,
+            "id": 4533,
             "name": "ModifierDefinition",
-            "src": "603:67:15"
+            "src": "603:67:28"
           },
           {
             "attributes": {
@@ -467,7 +467,7 @@
               "isConstructor": false,
               "name": "transferOwnership",
               "payable": false,
-              "scope": 1536,
+              "scope": 4559,
               "stateMutability": "nonpayable",
               "superFunction": null,
               "visibility": "public"
@@ -479,7 +479,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "newOwner",
-                      "scope": 1535,
+                      "scope": 4558,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "address",
@@ -492,19 +492,19 @@
                           "name": "address",
                           "type": "address"
                         },
-                        "id": 1511,
+                        "id": 4534,
                         "name": "ElementaryTypeName",
-                        "src": "858:7:15"
+                        "src": "858:7:28"
                       }
                     ],
-                    "id": 1512,
+                    "id": 4535,
                     "name": "VariableDeclaration",
-                    "src": "858:16:15"
+                    "src": "858:16:28"
                   }
                 ],
-                "id": 1513,
+                "id": 4536,
                 "name": "ParameterList",
-                "src": "857:18:15"
+                "src": "857:18:28"
               },
               {
                 "attributes": {
@@ -513,9 +513,9 @@
                   ]
                 },
                 "children": [],
-                "id": 1516,
+                "id": 4539,
                 "name": "ParameterList",
-                "src": "893:0:15"
+                "src": "893:0:28"
               },
               {
                 "attributes": {
@@ -530,18 +530,18 @@
                       "overloadedDeclarations": [
                         null
                       ],
-                      "referencedDeclaration": 1510,
+                      "referencedDeclaration": 4533,
                       "type": "modifier ()",
                       "value": "onlyOwner"
                     },
-                    "id": 1514,
+                    "id": 4537,
                     "name": "Identifier",
-                    "src": "883:9:15"
+                    "src": "883:9:28"
                   }
                 ],
-                "id": 1515,
+                "id": 4538,
                 "name": "ModifierInvocation",
-                "src": "883:9:15"
+                "src": "883:9:28"
               },
               {
                 "children": [
@@ -573,13 +573,13 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 1649,
+                              "referencedDeclaration": 5014,
                               "type": "function (bool) pure",
                               "value": "require"
                             },
-                            "id": 1517,
+                            "id": 4540,
                             "name": "Identifier",
-                            "src": "899:7:15"
+                            "src": "899:7:28"
                           },
                           {
                             "attributes": {
@@ -602,13 +602,13 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 1512,
+                                  "referencedDeclaration": 4535,
                                   "type": "address",
                                   "value": "newOwner"
                                 },
-                                "id": 1518,
+                                "id": 4541,
                                 "name": "Identifier",
-                                "src": "907:8:15"
+                                "src": "907:8:28"
                               },
                               {
                                 "attributes": {
@@ -640,9 +640,9 @@
                                       "type": "type(address)",
                                       "value": "address"
                                     },
-                                    "id": 1519,
+                                    "id": 4542,
                                     "name": "ElementaryTypeNameExpression",
-                                    "src": "919:7:15"
+                                    "src": "919:7:28"
                                   },
                                   {
                                     "attributes": {
@@ -657,29 +657,29 @@
                                       "type": "int_const 0",
                                       "value": "0"
                                     },
-                                    "id": 1520,
+                                    "id": 4543,
                                     "name": "Literal",
-                                    "src": "927:1:15"
+                                    "src": "927:1:28"
                                   }
                                 ],
-                                "id": 1521,
+                                "id": 4544,
                                 "name": "FunctionCall",
-                                "src": "919:10:15"
+                                "src": "919:10:28"
                               }
                             ],
-                            "id": 1522,
+                            "id": 4545,
                             "name": "BinaryOperation",
-                            "src": "907:22:15"
+                            "src": "907:22:28"
                           }
                         ],
-                        "id": 1523,
+                        "id": 4546,
                         "name": "FunctionCall",
-                        "src": "899:31:15"
+                        "src": "899:31:28"
                       }
                     ],
-                    "id": 1524,
+                    "id": 4547,
                     "name": "ExpressionStatement",
-                    "src": "899:31:15"
+                    "src": "899:31:28"
                   },
                   {
                     "children": [
@@ -713,13 +713,13 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 1490,
+                              "referencedDeclaration": 4513,
                               "type": "function (address,address)",
                               "value": "OwnershipTransferred"
                             },
-                            "id": 1525,
+                            "id": 4548,
                             "name": "Identifier",
-                            "src": "936:20:15"
+                            "src": "936:20:28"
                           },
                           {
                             "attributes": {
@@ -727,13 +727,13 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 1484,
+                              "referencedDeclaration": 4507,
                               "type": "address",
                               "value": "owner"
                             },
-                            "id": 1526,
+                            "id": 4549,
                             "name": "Identifier",
-                            "src": "957:5:15"
+                            "src": "957:5:28"
                           },
                           {
                             "attributes": {
@@ -741,23 +741,23 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 1512,
+                              "referencedDeclaration": 4535,
                               "type": "address",
                               "value": "newOwner"
                             },
-                            "id": 1527,
+                            "id": 4550,
                             "name": "Identifier",
-                            "src": "964:8:15"
+                            "src": "964:8:28"
                           }
                         ],
-                        "id": 1528,
+                        "id": 4551,
                         "name": "FunctionCall",
-                        "src": "936:37:15"
+                        "src": "936:37:28"
                       }
                     ],
-                    "id": 1529,
+                    "id": 4552,
                     "name": "ExpressionStatement",
-                    "src": "936:37:15"
+                    "src": "936:37:28"
                   },
                   {
                     "children": [
@@ -778,13 +778,13 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 1484,
+                              "referencedDeclaration": 4507,
                               "type": "address",
                               "value": "owner"
                             },
-                            "id": 1530,
+                            "id": 4553,
                             "name": "Identifier",
-                            "src": "979:5:15"
+                            "src": "979:5:28"
                           },
                           {
                             "attributes": {
@@ -792,49 +792,49 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 1512,
+                              "referencedDeclaration": 4535,
                               "type": "address",
                               "value": "newOwner"
                             },
-                            "id": 1531,
+                            "id": 4554,
                             "name": "Identifier",
-                            "src": "987:8:15"
+                            "src": "987:8:28"
                           }
                         ],
-                        "id": 1532,
+                        "id": 4555,
                         "name": "Assignment",
-                        "src": "979:16:15"
+                        "src": "979:16:28"
                       }
                     ],
-                    "id": 1533,
+                    "id": 4556,
                     "name": "ExpressionStatement",
-                    "src": "979:16:15"
+                    "src": "979:16:28"
                   }
                 ],
-                "id": 1534,
+                "id": 4557,
                 "name": "Block",
-                "src": "893:107:15"
+                "src": "893:107:28"
               }
             ],
-            "id": 1535,
+            "id": 4558,
             "name": "FunctionDefinition",
-            "src": "831:169:15"
+            "src": "831:169:28"
           }
         ],
-        "id": 1536,
+        "id": 4559,
         "name": "ContractDefinition",
-        "src": "216:787:15"
+        "src": "216:787:28"
       }
     ],
-    "id": 1537,
+    "id": 4560,
     "name": "SourceUnit",
-    "src": "0:1003:15"
+    "src": "0:1003:28"
   },
   "compiler": {
     "name": "solc",
-    "version": "0.4.18+commit.9cf6e910.Emscripten.clang"
+    "version": "0.4.19+commit.c4cbbb05.Emscripten.clang"
   },
   "networks": {},
   "schemaVersion": "1.0.1",
-  "updatedAt": "2018-01-28T03:17:17.976Z"
+  "updatedAt": "2018-02-15T06:34:56.880Z"
 }
