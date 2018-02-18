@@ -3,10 +3,8 @@ pragma solidity 0.4.19;
 import "./IGVCampaign.sol";
 
 contract IGVCore is IGVCampaign {
-  Token[] tokens;
   address public founderAddress;
   address public ownerAddress;
-
   uint256 public campaignEscrowAmount = 0;
   uint256 public totalRaised = 0;
 
@@ -17,13 +15,13 @@ contract IGVCore is IGVCampaign {
   }
 
   function IGVCore() public {
-      founderAddress = msg.sender;
-      ownerAddress = msg.sender;
+    founderAddress = msg.sender;
+    ownerAddress = msg.sender;
 
-      // Genesis is unspendable/invalid =)
-      _createCampaign(address(0), "Genesis Campaign", "");
-      _createCertificate(0, 1, "Genesis Certificate", 0);
-      //_createToken(0, 0, 0, address(0));
+    // Genesis is unspendable/invalid =)
+    _createCampaign(address(0), "Genesis Campaign", "");
+    _createCertificate(0, 1, "Genesis Certificate", 0);
+    _createToken(0, 0, 0, address(0), 0);
   }
 
   function createCampaign(
@@ -34,9 +32,12 @@ contract IGVCore is IGVCampaign {
     payable
     returns (uint)
   {
+    // TODO Partner Bene
     require(msg.value == campaignEscrowAmount);
 
-    return _createCampaign(msg.sender, _campaignName, _taxid);
+    uint256 campaignId = _createCampaign(msg.sender, _campaignName, _taxid);
+    campaignBalance[campaignId] += campaignEscrowAmount;
+    return campaignId;
   }
 
   function createCertificate(
@@ -63,7 +64,7 @@ contract IGVCore is IGVCampaign {
   )
     public
     payable
-    //returns (uint)
+    returns (uint)
   {
     Campaign storage campaign = campaigns[_campaignId];
 
@@ -77,17 +78,17 @@ contract IGVCore is IGVCampaign {
     require(certificate.remaining > 0);
     require(msg.value == uint256(certificate.price));
 
-    uint64 unitNumber = certificate.supply - certificate.remaining + 1;
+    uint16 unitNumber = certificate.supply - certificate.remaining + 1;
 
     campaignBalance[_campaignId] += msg.value;
 
     totalRaised += msg.value;
 
-
-    //return _createToken(_campaignId, _certificateIdx, unitNumber, msg.sender);
+    return _createToken(_campaignId, _certificateIdx, unitNumber, msg.sender, msg.value);
   }
 
   function vetoCampaign(uint256 _campaignId) public onlyBy(ownerAddress)  {
+    require(_campaignId > 0);
     delete campaigns[_campaignId];
     campaigns[_campaignId].veto = true;
     campaigns[_campaignId].owner = ownerAddress;
@@ -97,70 +98,6 @@ contract IGVCore is IGVCampaign {
       delete certificates[i];
     }
   }
-
-  // Views
-  function getCampaign(uint256 _id)
-      public
-      view
-      returns (
-      address owner,
-      string campaignName,
-      string taxId,
-      bool active,
-      bool veto
-  ) {
-      Campaign storage campaign = campaigns[_id];
-
-      owner = campaign.owner;
-      campaignName = campaign.campaignName;
-      taxId = campaign.taxId;
-      veto = campaign.active;
-      veto = campaign.veto;
-  }
-
-  function getCertificate(uint256 _campaignId, uint64 _certificateIdx)
-    public
-    view
-    returns(
-    uint256 campaignId,
-    uint64 supply,
-    uint64 remaining,
-    string name,
-    uint256 price
-  ){
-
-    Certificate storage certificate = campaignCertificates[_campaignId][_certificateIdx];
-
-    campaignId = uint256(certificate.campaignId);
-    supply = uint64(certificate.supply);
-    remaining = uint64(certificate.remaining);
-    name = certificate.name;
-    price = uint256(certificate.price);
-  }
-
-  function getToken(uint256 _id)
-    public
-  {
-
-  }
-
-  function getTotalCampaignsForOwner(address _owner)
-    public
-    view
-    returns (
-    uint256 total
-  ){
-    total = campaignOwnerTotalCampaigns[_owner];
-  }
-
-  function getCampaignIdByOwnerIndex(address _owner, uint256 _index)
-    public
-    view
-    returns (
-      uint256 id
-    ) {
-      id = campaignOwnerToIndexes[_owner][_index];
-    }
 
   // Contract Management
   function changeEscrowAmount(

@@ -1,6 +1,6 @@
 pragma solidity ^ 0.4.18;
 
-import '../contracts/dar/StandardAssetRegistry.sol';
+import '../../contracts/dar/StandardAssetRegistry.sol';
 
 contract StandardAssetRegistryTest is StandardAssetRegistry {
 

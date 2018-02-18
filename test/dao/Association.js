@@ -1,7 +1,7 @@
-import assertRevert, { assertError } from './helpers/assertRevert'
-import { increaseTimeTo, duration } from './helpers/increaseTime';
+import assertRevert, { assertError } from '../helpers/assertRevert'
+import { increaseTimeTo, duration } from '../helpers/increaseTime';
 
-import getEIP820 from './helpers/getEIP820'
+import getEIP820 from '../helpers/getEIP820'
 
 const BigNumber = web3.BigNumber
 

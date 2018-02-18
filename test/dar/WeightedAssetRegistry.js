@@ -1,6 +1,6 @@
-import assertRevert, { assertError } from './helpers/assertRevert'
+import assertRevert, { assertError } from '../helpers/assertRevert'
 
-import getEIP820 from './helpers/getEIP820'
+import getEIP820 from '../helpers/getEIP820'
 
 const BigNumber = web3.BigNumber
 
@@ -69,15 +69,6 @@ contract('WeightedAssetRegistryTest', accounts => {
   })
 
   describe('Accounting', () => {
-    it('Changes the weight of an asset', async () => {
-      await registry.changeWeight(0, 0, sentByCreator)
-
-      const assetWeight0 = await registry.weightOfAsset(0)
-      const totalWeight = await registry.totalWeight()
-
-      assetWeight0.should.be.bignumber.equal(0)
-      totalWeight.should.be.bignumber.equal(250)
-    })
     it('Transfers an asset', async () => {
       await registry.transfer(mallory, 1, sentByCreator)
 

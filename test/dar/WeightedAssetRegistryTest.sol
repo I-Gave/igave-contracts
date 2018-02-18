@@ -1,6 +1,6 @@
 pragma solidity ^0.4.18;
 
-import '../contracts/dar/WeightedAssetRegistry.sol';
+import '../../contracts/dar/WeightedAssetRegistry.sol';
 
 contract WeightedAssetRegistryTest is WeightedAssetRegistry {
 
