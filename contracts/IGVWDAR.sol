@@ -1,6 +1,6 @@
 pragma solidity 0.4.19;
 
-import './dar/WeightedAssetRegistry.sol';
+import "./dar/WeightedAssetRegistry.sol";
 
 contract IGVWDAR is WeightedAssetRegistry {
   string internal _name =  "IGV NFT";

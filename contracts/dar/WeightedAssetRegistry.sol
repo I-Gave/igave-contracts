@@ -1,8 +1,8 @@
 pragma solidity ^0.4.18;
 
-import './StandardAssetRegistry.sol';
-import './IWeightedRegistry.sol';
-import './WeightedAssetRegistryStorage.sol';
+import "./StandardAssetRegistry.sol";
+import "./IWeightedRegistry.sol";
+import "./WeightedAssetRegistryStorage.sol";
 
 contract WeightedAssetRegistry is StandardAssetRegistry, WeightedAssetRegistryStorage, IWeightedRegistry {
 

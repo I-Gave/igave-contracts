@@ -1,15 +1,15 @@
 pragma solidity ^0.4.18;
 
-import 'zeppelin-solidity/contracts/math/SafeMath.sol';
+import "zeppelin-solidity/contracts/math/SafeMath.sol";
 
-import 'eip820/contracts/EIP820Registry.sol';
-import 'eip820/contracts/EIP820Implementer.sol';
+import "eip820/contracts/EIP820Registry.sol";
+import "eip820/contracts/EIP820Implementer.sol";
 
-import './AssetRegistryStorage.sol';
+import "./AssetRegistryStorage.sol";
 
-import './IAssetRegistry.sol';
+import "./IAssetRegistry.sol";
 
-import './IAssetHolder.sol';
+import "./IAssetHolder.sol";
 
 contract StandardAssetRegistry is AssetRegistryStorage, IAssetRegistry, EIP820Implementer {
   using SafeMath for uint256;
@@ -213,7 +213,7 @@ contract StandardAssetRegistry is AssetRegistryStorage, IAssetRegistry, EIP820Im
   }
 
   function _removeAssetData(uint256 assetId) internal {
-    _assetData[assetId] = '';
+    _assetData[assetId] = "";
   }
 
   //
@@ -225,7 +225,7 @@ contract StandardAssetRegistry is AssetRegistryStorage, IAssetRegistry, EIP820Im
 
     _addAssetTo(beneficiary, assetId, data);
 
-    Transfer(0, beneficiary, assetId, msg.sender, bytes(data), '');
+    Transfer(0, beneficiary, assetId, msg.sender, bytes(data), "");
   }
 
   function _destroy(uint256 assetId) internal {
@@ -235,7 +235,7 @@ contract StandardAssetRegistry is AssetRegistryStorage, IAssetRegistry, EIP820Im
     _removeAssetFrom(holder, assetId);
     _removeAssetData(assetId);
 
-    Transfer(holder, 0, assetId, msg.sender, '', '');
+    Transfer(holder, 0, assetId, msg.sender, "", "");
   }
 
   //
@@ -267,11 +267,11 @@ contract StandardAssetRegistry is AssetRegistryStorage, IAssetRegistry, EIP820Im
   }
 
   function transfer(address to, uint256 assetId) public {
-    return _doTransfer(to, assetId, '', 0, '');
+    return _doTransfer(to, assetId, "", 0, "");
   }
 
   function transfer(address to, uint256 assetId, bytes userData) public {
-    return _doTransfer(to, assetId, userData, 0, '');
+    return _doTransfer(to, assetId, userData, 0, "");
   }
 
   function transfer(address to, uint256 assetId, bytes userData, bytes operatorData) public {
@@ -304,7 +304,7 @@ contract StandardAssetRegistry is AssetRegistryStorage, IAssetRegistry, EIP820Im
       require(!_reentrancy);
       _reentrancy = true;
 
-      address recipient = interfaceAddr(to, 'IAssetHolder');
+      address recipient = interfaceAddr(to, "IAssetHolder");
       require(recipient != 0);
 
       IAssetHolder(recipient).onAssetReceived(assetId, holder, to, userData, operator, operatorData);

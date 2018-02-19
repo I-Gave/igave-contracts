@@ -1,6 +1,6 @@
 pragma solidity ^0.4.18;
 
-import './AssetRegistryStorage.sol';
+import "./AssetRegistryStorage.sol";
 
 contract WeightedAssetRegistryStorage is AssetRegistryStorage {
 

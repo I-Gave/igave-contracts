@@ -10,8 +10,8 @@ contract IGVCore is IGVCampaign {
 
   modifier onlyBy(address _account)
   {
-      require(msg.sender == _account);
-      _;
+    require(msg.sender == _account);
+    _;
   }
 
   function IGVCore() public {
@@ -25,8 +25,8 @@ contract IGVCore is IGVCampaign {
   }
 
   function createCampaign(
-      string _campaignName,
-      string _taxid
+    string _campaignName,
+    string _taxid
   )
     public
     payable
@@ -41,10 +41,10 @@ contract IGVCore is IGVCampaign {
   }
 
   function createCertificate(
-      uint256 _campaignId,
-      uint16 _supply,
-      string _name,
-      uint256 _price
+    uint256 _campaignId,
+    uint16 _supply,
+    string _name,
+    uint256 _price
   ) public
     returns (uint)
   {
@@ -59,8 +59,8 @@ contract IGVCore is IGVCampaign {
   }
 
   function createToken(
-      uint128 _campaignId,
-      uint16 _certificateIdx
+    uint128 _campaignId,
+    uint16 _certificateIdx
   )
     public
     payable
@@ -110,10 +110,11 @@ contract IGVCore is IGVCampaign {
   }
 
   function changeOwner(
-      address _newOwner
+    address _newOwner
   )
     public
-    onlyBy(ownerAddress) {
-      ownerAddress = _newOwner;
+    onlyBy(ownerAddress)
+  {
+    ownerAddress = _newOwner;
   }
 }
