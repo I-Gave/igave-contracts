@@ -61,10 +61,13 @@ contract IGVCampaign is WeightedAssetRegistry {
     campaignCertificates[_campaignId][_certificateIdx].remaining--;
     uint256 newTokenId = tokens.push(_token) - 1;
 
-    // Generate replace DAR
-    //_transfer(0, _owner, newTokenId);
+    //generate(newTokenId, _owner, "", _value);
 
     return newTokenId;
+  }
+
+  function generate(uint256 assetId, address beneficiary, string data, uint256 weight) public {
+    _generate(assetId, beneficiary, data, weight);
   }
 
   function _createCampaign(
@@ -139,7 +142,7 @@ contract IGVCampaign is WeightedAssetRegistry {
     owner = campaign.owner;
     campaignName = campaign.campaignName;
     taxId = campaign.taxId;
-    veto = campaign.active;
+    active = campaign.active;
     veto = campaign.veto;
   }
 

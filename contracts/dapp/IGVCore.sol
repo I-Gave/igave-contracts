@@ -8,20 +8,13 @@ contract IGVCore is IGVCampaign {
   uint256 public campaignEscrowAmount = 0;
   uint256 public totalRaised = 0;
 
+  event ActivateCampaign(uint256 campaignId);
+  event VetoCampaign(uint256 campaignId);
+
   modifier onlyBy(address _account)
   {
     require(msg.sender == _account);
     _;
-  }
-
-  function IGVCore() public {
-    founderAddress = msg.sender;
-    ownerAddress = msg.sender;
-
-    // Genesis is unspendable/invalid =)
-    _createCampaign(address(0), "Genesis Campaign", "");
-    _createCertificate(0, 1, "Genesis Certificate", 0);
-    _createToken(0, 0, 0, address(0), 0);
   }
 
   function createCampaign(
@@ -50,6 +43,7 @@ contract IGVCore is IGVCampaign {
   {
     require(campaignIndexToOwner[_campaignId] == msg.sender);
     require(_campaignId > 0);
+
 
     Campaign storage campaign = campaigns[_campaignId];
 
@@ -97,6 +91,17 @@ contract IGVCore is IGVCampaign {
     for (uint i = 0; i < certificates.length; i++) {
       delete certificates[i];
     }
+    VetoCampaign(_campaignId);
+  }
+
+  function activateCampaign(uint256 _campaignId) public onlyBy(ownerAddress) {
+    require(_campaignId > 0);
+    require(campaigns[_campaignId].active == false);
+    require(campaigns[_campaignId].veto == false);
+
+    campaigns[_campaignId].active = true;
+
+    ActivateCampaign(_campaignId);
   }
 
   // Contract Management

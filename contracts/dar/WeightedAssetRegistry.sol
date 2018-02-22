@@ -14,7 +14,7 @@ contract WeightedAssetRegistry is StandardAssetRegistry, WeightedAssetRegistrySt
     return true;
   }
 
-  function weightOfAsset(uint256 assetId) public view returns (uint64) {
+  function weightOfAsset(uint256 assetId) public view returns (uint256) {
     return _weightOfAsset[assetId];
   }
 
@@ -22,19 +22,21 @@ contract WeightedAssetRegistry is StandardAssetRegistry, WeightedAssetRegistrySt
     return _weightOfHolder[holder];
   }
 
-  function _addWeightTo(address to, uint64 weight) internal {
-    _weightOfHolder[to] += weight;
+  function _addWeightTo(address to, uint256 weight) internal {
+    uint256 newWeight = SafeMath.add(_weightOfHolder[to], weight);
+    _weightOfHolder[to] = newWeight;
   }
 
-  function _removeWeightFrom(address from, uint64 weight) internal {
-    _weightOfHolder[from] -= weight;
+  function _removeWeightFrom(address from, uint256 weight) internal {
+    uint256 newWeight = SafeMath.sub(_weightOfHolder[from], weight);
+    _weightOfHolder[from] = newWeight;
   }
 
-  function _changeWeight(uint256 assetId, uint64 weight) internal {
+  function _changeWeight(uint256 assetId, uint256 weight) internal {
     require(exists(assetId));
 
     address owner = ownerOf(assetId);
-    uint64 oldWeight = weightOfAsset(assetId);
+    uint256 oldWeight = weightOfAsset(assetId);
 
     if (owner != address(0)) {
       _removeWeightFrom(owner, oldWeight);
@@ -53,12 +55,12 @@ contract WeightedAssetRegistry is StandardAssetRegistry, WeightedAssetRegistrySt
     ChangeWeight(assetId, weight);
   }
 
-  function _update(uint256 assetId, string data, uint64 weight) internal {
+  function _update(uint256 assetId, string data, uint256 weight) internal {
     super._update(assetId, data);
     _changeWeight(assetId, weight);
   }
 
-  function _generate(uint256 assetId, address beneficiary, string data, uint64 weight) internal {
+  function _generate(uint256 assetId, address beneficiary, string data, uint256 weight) internal {
     super._generate(assetId, beneficiary, data);
 
     _changeWeight(assetId, weight);
@@ -68,7 +70,7 @@ contract WeightedAssetRegistry is StandardAssetRegistry, WeightedAssetRegistrySt
     address holder = _holderOf[assetId];
     require(holder != 0);
 
-    uint64 weight = weightOfAsset(assetId);
+    uint256 weight = weightOfAsset(assetId);
 
     _removeWeightFrom(holder, weight);
     _weightOfAsset[assetId] = 0;
@@ -84,7 +86,7 @@ contract WeightedAssetRegistry is StandardAssetRegistry, WeightedAssetRegistrySt
     internal
   {
     address holder = _holderOf[assetId];
-    uint64 weight = weightOfAsset(assetId);
+    uint256 weight = weightOfAsset(assetId);
 
     _removeWeightFrom(holder, weight);
     _addWeightTo(to, weight);

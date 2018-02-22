@@ -6,16 +6,20 @@ pragma solidity ^0.4.18;
 
 import "./IDARAdapter.sol";
 
-contract WeightedAssetRegistry is IDARAdapter {
+contract WeightedAssetRegistry {
   mapping(address => uint256) internal _weightOfHolder;
   function weightOfHolder(address holder) public view returns (uint256);
 }
 
-contract DARAdapter {
+contract DARAdapter is IDARAdapter {
   WeightedAssetRegistry _voteWeightAddress;
 
   function DARAdapter(address voteWeightAddress)  public {
     _voteWeightAddress = WeightedAssetRegistry(voteWeightAddress);
+  }
+
+  function isDARAdapter() returns (bool) {
+    return true;
   }
 
   function voteWeightAddress() public view returns (address) {
