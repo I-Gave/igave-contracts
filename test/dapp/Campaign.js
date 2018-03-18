@@ -36,9 +36,18 @@ contract('IGVCampaign Test', accounts => {
 
         campaign[3].should.be.equal(true);
       })
-      it('Vetos a campaign', async () => {
+      it('Vetos an inactive campaign', async () => {
         await dapp.createCampaign('Test Campaign', '501cid');
         await dapp.vetoCampaign(1)
+        const vetoCampaign = await dapp.getCampaign(1);
+
+        vetoCampaign[4].should.be.equal(true);
+      })
+      it('Vetos an active campaign', async () => {
+        await dapp.createCampaign('Test Campaign', '501cid');
+        await dapp.activateCampaign(1)
+        await dapp.vetoCampaign(1)
+
         const vetoCampaign = await dapp.getCampaign(1);
 
         vetoCampaign[4].should.be.equal(true);

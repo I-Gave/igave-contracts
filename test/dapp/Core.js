@@ -64,27 +64,6 @@ contract('DAPP Test', accounts => {
         await dapp.createCertificate(1, 10, "Test Certificate", 10);
         await dapp.activateCampaign(1);
       })
-      it('Buys a token', async () => {
-        await dapp.createToken(1, 0, { value: 10 });
-        const token = await dapp.getToken(1);
-        const owner = await dapp.ownerOf(1);
-
-        token[3].should.be.equal(creator);
-        owner.should.be.equal(creator);
-      })
-      it('Campaign Balance increases after purchase', async () => {
-        await dapp.createToken(1, 0, { value: 10 });
-        const balance = await dapp.getCampaignBalance(1);
-
-        balance.should.be.bignumber.equal(10);
-      })
-      it('Withdraws campaign balance', async () => {
-        await dapp.createToken(1, 0, { value: 10 });
-        await dapp.withdrawCampaignBalance(1);
-        const balance = await dapp.getCampaignBalance(1);
-
-        balance.should.be.bignumber.equal(0);
-      })
     })
   })
 })

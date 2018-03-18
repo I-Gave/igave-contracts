@@ -214,7 +214,9 @@ contract IGVCampaign is IGVAsset {
   }
 
   function withdrawCampaignBalance(uint256 _campaignId) public {
+    require(_campaignId >  0);
     require(campaignIndexToOwner[_campaignId] == msg.sender);
+    require(campaignBalance[_campaignId] > 0);
     uint256 _balance = campaignBalance[_campaignId];
     campaignBalance[_campaignId] = 0;
     msg.sender.transfer(_balance);
