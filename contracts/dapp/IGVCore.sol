@@ -25,7 +25,6 @@ contract IGVCore is IGVCampaign {
     payable
     returns (uint)
   {
-    // TODO Partner Bene
     require(msg.value == campaignEscrowAmount);
 
     uint256 campaignId = _createCampaign(msg.sender, _campaignName, _taxid);
@@ -44,9 +43,9 @@ contract IGVCore is IGVCampaign {
     require(campaignIndexToOwner[_campaignId] == msg.sender);
     require(_campaignId > 0);
 
-
     Campaign storage campaign = campaigns[_campaignId];
 
+    require(campaign.active == false);
     require(campaign.veto == false);
 
     return _createCertificate(_campaignId, _supply, _name, _price);

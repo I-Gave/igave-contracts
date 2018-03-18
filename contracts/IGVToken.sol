@@ -1,6 +1,6 @@
 pragma solidity 0.4.19;
 
-import "./token/ERC827/MintableToken.sol";
+import "./token/ERC20/MintableToken.sol";
 
 contract IGVToken is MintableToken {
   string public constant name = "I Gave Token";

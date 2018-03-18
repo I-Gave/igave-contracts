@@ -1,8 +1,8 @@
 pragma solidity 0.4.19;
 
-import "../dar/WeightedAssetRegistry.sol";
+import './IGVAsset.sol';
 
-contract IGVCampaign is WeightedAssetRegistry {
+contract IGVCampaign is IGVAsset {
   Campaign[] campaigns;
   Token[] tokens;
   mapping (uint256 => address) public campaignIndexToOwner;
@@ -59,16 +59,13 @@ contract IGVCampaign is WeightedAssetRegistry {
     });
 
     campaignCertificates[_campaignId][_certificateIdx].remaining--;
-    uint256 newTokenId = tokens.push(_token) - 1;
+    uint256 newTokenId = tokens.push(_token);
 
-    //generate(newTokenId, _owner, "", _value);
+    _mint(_owner, newTokenId);
 
     return newTokenId;
   }
 
-  function generate(uint256 assetId, address beneficiary, string data, uint256 weight) public {
-    _generate(assetId, beneficiary, data, weight);
-  }
 
   function _createCampaign(
     address _owner,
@@ -86,7 +83,7 @@ contract IGVCampaign is WeightedAssetRegistry {
       veto: false
     });
 
-    uint256 newCampaignId = campaigns.push(_campaign) - 1;
+    uint256 newCampaignId = campaigns.push(_campaign);
 
     campaignIndexToOwner[newCampaignId] = _owner;
     campaignOwnerToIndexes[_owner].push(newCampaignId);
@@ -206,12 +203,22 @@ contract IGVCampaign is WeightedAssetRegistry {
     id = campaignOwnerToIndexes[_owner][_index];
   }
 
-  // -1 Genesis Campaign is not a valid campaign
   function totalCampaigns() public view returns (uint) {
-    return campaigns.length - 1;
+    return campaigns.length;
   }
 
   function campaignCertificateCount(uint256 _campaignId) public view returns (uint64) {
     return campaignCertificateCount[_campaignId];
+  }
+
+  function getCampaignBalance(uint256 _campaignId) public view returns (uint256) {
+    return campaignBalance[_campaignId];
+  }
+
+  function withdrawCampaignBalance(uint256 _campaignId) public {
+    require(campaignIndexToOwner[_campaignId] == msg.sender);
+    uint256 _balance = campaignBalance[_campaignId];
+    campaignBalance[_campaignId] = 0;
+    msg.sender.transfer(_balance);
   }
 }

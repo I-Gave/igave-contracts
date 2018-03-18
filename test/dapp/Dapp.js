@@ -1,8 +1,6 @@
 import assertRevert, { assertError } from '../helpers/assertRevert'
 import { increaseTimeTo, duration } from '../helpers/increaseTime';
 
-import getEIP820 from '../helpers/getEIP820'
-
 const BigNumber = web3.BigNumber
 
 const DAPP = artifacts.require('IGVDAPP')
@@ -42,7 +40,7 @@ contract('DAPP Test', accounts => {
       })
       it('Has a Genesis Token', async () => {
         const genToken = await dapp.getToken(0);
-        genToken[3].should.be.equal('0x0000000000000000000000000000000000000000');
+        genToken[3].should.be.equal(creator);
       })
     })
     describe('Escrow', async () => {
@@ -108,13 +106,41 @@ contract('DAPP Test', accounts => {
           await dapp.getToken(0);
           const token = await dapp.getToken(0);
 
-          token[3].should.be.equal('0x0000000000000000000000000000000000000000');
+          token[3].should.be.equal(creator);
         })
         it('Buys a token', async () => {
           await dapp.createToken(1,0, {value: 10});
           const token = await dapp.getToken(1);
 
           token[3].should.be.equal(creator);
+        })
+      })
+      describe('User Land', async () => {
+        beforeEach(async () => {
+          await dapp.createCampaign('Test Campaign', '501cid');
+          await dapp.createCertificate(1, 10, "Test Certificate", 10);
+          await dapp.activateCampaign(1);
+        })
+        it('Buys a token', async () => {
+          await dapp.createToken(1, 0, { value: 10 });
+          const token = await dapp.getToken(1);
+          const owner = await dapp.ownerOf(1);
+
+          token[3].should.be.equal(creator);
+          owner.should.be.equal(creator);
+        })
+        it('Campaign Balance increases after purchase', async () => {
+          await dapp.createToken(1, 0, { value: 10 });
+          const balance = await dapp.getCampaignBalance(1);
+
+          balance.should.be.bignumber.equal(10);
+        })
+        it('Withdraws campaign balance', async () => {
+          await dapp.createToken(1, 0, { value: 10 });
+          await dapp.withdrawCampaignBalance(1);
+          const balance = await dapp.getCampaignBalance(1);
+
+          balance.should.be.bignumber.equal(0);
         })
       })
     })

@@ -7,9 +7,8 @@ contract IGVDAPP is IGVCore {
     founderAddress = msg.sender;
     ownerAddress = msg.sender;
 
-    // Genesis is unspendable/invalid =)
-    _createCampaign(address(0), "Genesis Campaign", "");
+    _createCampaign(msg.sender, "Genesis Campaign", "");
     _createCertificate(0, 1, "Genesis Certificate", 0);
-    _createToken(0, 0, 0, address(0), 0);
+    _createToken(0, 0, 0, msg.sender, 0);
   }
 }

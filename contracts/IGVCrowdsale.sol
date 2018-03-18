@@ -2,7 +2,7 @@ pragma solidity 0.4.19;
 
 import "./crowdsale/CappedCrowdsale.sol";
 import "./crowdsale/RefundableCrowdsale.sol";
-import "./token/ERC827/MintableToken.sol";
+import "./token/ERC20/MintableToken.sol";
 
 contract IGVCrowdsale is CappedCrowdsale, RefundableCrowdsale {
 
