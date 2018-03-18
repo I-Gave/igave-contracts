@@ -1,10 +1,12 @@
 pragma solidity 0.4.19;
 
+import '../util/SafeMath.sol';
 import './IGVAsset.sol';
 
 contract IGVCampaign is IGVAsset {
   Campaign[] campaigns;
   Token[] tokens;
+
   mapping (uint256 => address) public campaignIndexToOwner;
   mapping (address => uint256[]) public campaignOwnerToIndexes;
   mapping (address => uint256) public campaignOwnerTotalCampaigns;
@@ -205,10 +207,6 @@ contract IGVCampaign is IGVAsset {
 
   function totalCampaigns() public view returns (uint) {
     return campaigns.length;
-  }
-
-  function campaignCertificateCount(uint256 _campaignId) public view returns (uint64) {
-    return campaignCertificateCount[_campaignId];
   }
 
   function getCampaignBalance(uint256 _campaignId) public view returns (uint256) {

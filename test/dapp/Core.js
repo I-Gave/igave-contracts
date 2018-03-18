@@ -12,7 +12,7 @@ require('chai')
 
 const expect = require('chai').expect
 
-contract('IGVCampaign Test', accounts => {
+contract('DAPP Test', accounts => {
   const [creator, user, anotherUser, operator, mallory] = accounts
   let dapp = null
 
@@ -20,7 +20,7 @@ contract('IGVCampaign Test', accounts => {
     dapp = await DAPP.new()
   })
 
-  describe('IGVCampaign', () => {
+  describe('DAPP', () => {
     describe('Constructor', async () => {
       it('Has a Founder', async () => {
         const founder = await dapp.founderAddress();
@@ -41,6 +41,49 @@ contract('IGVCampaign Test', accounts => {
       it('Has a Genesis Token', async () => {
         const genToken = await dapp.getToken(0);
         genToken[3].should.be.equal(creator);
+      })
+    })
+    describe('Escrow', async () => {
+      it('Has escrow amount', async () => {
+        const escrow = await dapp.campaignEscrowAmount()
+        escrow.should.be.bignumber.equal(0);
+      })
+      it('Changes escrow amount', async () => {
+        const oldEscrow = await dapp.campaignEscrowAmount()
+        oldEscrow.should.be.bignumber.equal(0);
+
+        await dapp.changeEscrowAmount(10000);
+
+        const newEscrow = await dapp.campaignEscrowAmount()
+        newEscrow.should.be.bignumber.equal(10000);
+      })
+    })
+    describe('User Land', async () => {
+      beforeEach(async () => {
+        await dapp.createCampaign('Test Campaign', '501cid');
+        await dapp.createCertificate(1, 10, "Test Certificate", 10);
+        await dapp.activateCampaign(1);
+      })
+      it('Buys a token', async () => {
+        await dapp.createToken(1, 0, { value: 10 });
+        const token = await dapp.getToken(1);
+        const owner = await dapp.ownerOf(1);
+
+        token[3].should.be.equal(creator);
+        owner.should.be.equal(creator);
+      })
+      it('Campaign Balance increases after purchase', async () => {
+        await dapp.createToken(1, 0, { value: 10 });
+        const balance = await dapp.getCampaignBalance(1);
+
+        balance.should.be.bignumber.equal(10);
+      })
+      it('Withdraws campaign balance', async () => {
+        await dapp.createToken(1, 0, { value: 10 });
+        await dapp.withdrawCampaignBalance(1);
+        const balance = await dapp.getCampaignBalance(1);
+
+        balance.should.be.bignumber.equal(0);
       })
     })
   })

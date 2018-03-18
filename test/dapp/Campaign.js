@@ -53,13 +53,9 @@ contract('IGVCampaign Test', accounts => {
 
         totalCampaigns.should.be.bignumber.equal(1);
       })
-      it('Tracks the total campaign certificates', async () => {
-        const totalCertificates = await dapp.campaignCertificateCount(0);
-
-        totalCertificates.should.be.bignumber.equal(1);
-      })
       it('Tracks the campaign balance', async () => {
         await dapp.createCampaign('Test Campaign', '501cid');
+        await dapp.createCertificate(1, 10, "Test Certificate", 10);
         await dapp.activateCampaign(1);
         await dapp.createToken(1, 0, { value: 10 });
 
@@ -67,10 +63,52 @@ contract('IGVCampaign Test', accounts => {
 
         balance.should.be.bignumber.equal(10);
       })
+      it('Withdraws the campaign balance', async () => {
+        await dapp.createCampaign('Test Campaign', '501cid');
+        await dapp.createCertificate(1, 10, "Test Certificate", 10);
+        await dapp.activateCampaign(1);
+        await dapp.createToken(1, 0, { value: 10 });
+        await dapp.withdrawCampaignBalance(1);
+
+        const balance = await dapp.getCampaignBalance(1);
+
+        balance.should.be.bignumber.equal(0);
+      })
     })
     describe('Fail conditions', async () => {
-      it('Fails if the escrow amount is incorrect', async () => {
+      it('Fails to create a campaign if the escrow amount is incorrect', async () => {
         await assertRevert(dapp.createCampaign('Test Campaign', '501cid', {value: 10}));
+      })
+      it('Fails to create a cert if the campaign is active', async () => {
+        await dapp.createCampaign('Test Campaign', '501cid');
+        await dapp.activateCampaign(1);
+        await assertRevert(dapp.createCertificate(1, 10, "Test Certificate", 10));
+      })
+      it('Fails to withdraw the campaign balance from the wrong owner', async () => {
+        await dapp.createCampaign('Test Campaign', '501cid');
+        await dapp.createCertificate(1, 10, "Test Certificate", 10);
+        await dapp.activateCampaign(1);
+        await dapp.createToken(1, 0, { value: 10 });
+        await assertRevert(dapp.withdrawCampaignBalance(1, {from: mallory}));
+
+        const balance = await dapp.getCampaignBalance(1);
+
+        balance.should.be.bignumber.equal(10);
+      })
+      it('Cannot activate the Genesis Campaign', async () => {
+        await assertRevert(dapp.activateCampaign(0));
+      })
+      it('Cannot activate the same campaign twice', async () => {
+        await dapp.createCampaign('Test Campaign', '501cid');
+        await dapp.createCertificate(1, 10, "Test Certificate", 10);
+        await dapp.activateCampaign(1);
+        await assertRevert(dapp.activateCampaign(1));
+      })
+      it('Cannot activate a vetoed campaign', async () => {
+        await dapp.createCampaign('Test Campaign', '501cid');
+        await dapp.createCertificate(1, 10, "Test Certificate", 10);
+        await dapp.vetoCampaign(1)
+        await assertRevert(dapp.activateCampaign(1));
       })
     })
   })
