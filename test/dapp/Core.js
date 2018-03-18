@@ -27,7 +27,7 @@ contract('DAPP Test', accounts => {
         founder.should.be.equal(creator);
       })
       it('Has an Owner', async () => {
-        const owner = await dapp.ownerAddress();
+        const owner = await dapp.owner();
         owner.should.be.equal(creator);
       })
       it('Has a Genesis Campaign', async () => {

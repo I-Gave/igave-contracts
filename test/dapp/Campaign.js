@@ -36,6 +36,14 @@ contract('IGVCampaign Test', accounts => {
 
         campaign[3].should.be.equal(true);
       })
+      it('Readies a campaign', async () => {
+        await dapp.createCampaign('Test Campaign', '501cid');
+        await dapp.readyCampaign(1)
+
+        const campaign = await dapp.getCampaign(1);
+
+        campaign[5].should.be.equal(true);
+      })
       it('Vetos an inactive campaign', async () => {
         await dapp.createCampaign('Test Campaign', '501cid');
         await dapp.vetoCampaign(1)
@@ -46,6 +54,15 @@ contract('IGVCampaign Test', accounts => {
       it('Vetos an active campaign', async () => {
         await dapp.createCampaign('Test Campaign', '501cid');
         await dapp.activateCampaign(1)
+        await dapp.vetoCampaign(1)
+
+        const vetoCampaign = await dapp.getCampaign(1);
+
+        vetoCampaign[4].should.be.equal(true);
+      })
+      it('Vetos a readied campaign', async () => {
+        await dapp.createCampaign('Test Campaign', '501cid');
+        await dapp.readyCampaign(1)
         await dapp.vetoCampaign(1)
 
         const vetoCampaign = await dapp.getCampaign(1);
@@ -83,6 +100,17 @@ contract('IGVCampaign Test', accounts => {
 
         balance.should.be.bignumber.equal(0);
       })
+      it('Campaigns have a maximum number of certificates', async () => {
+        const max = await dapp.maxCertificates();
+
+        max.should.be.bignumber.equal(1000);
+      })
+      it('Changes the max certificates', async () => {
+        await dapp.changeMaxCertificates(100);
+        const max = await dapp.maxCertificates();
+
+        max.should.be.bignumber.equal(100);
+      })
     })
     describe('Fail conditions', async () => {
       it('Fails to create a campaign if the escrow amount is incorrect', async () => {
@@ -118,6 +146,13 @@ contract('IGVCampaign Test', accounts => {
         await dapp.createCertificate(1, 10, "Test Certificate", 10);
         await dapp.vetoCampaign(1)
         await assertRevert(dapp.activateCampaign(1));
+      })
+      it('Cannot ready a campaign it does not own', async () => {
+        await dapp.createCampaign('Test Campaign', '501cid');
+        await assertRevert(dapp.readyCampaign(1, {from: mallory}));
+      })
+      it('Cannot change the max certificates unless they are the owner', async () => {
+        await assertRevert(dapp.changeMaxCertificates(100, {from: mallory}));
       })
     })
   })

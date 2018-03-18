@@ -1,11 +1,16 @@
 pragma solidity 0.4.19;
 
+import '../util/Ownable.sol';
 import '../util/SafeMath.sol';
 import './IGVAsset.sol';
 
-contract IGVCampaign is IGVAsset {
+contract IGVCampaign is IGVAsset, Ownable {
+  address public founderAddress;
+
   Campaign[] campaigns;
   Token[] tokens;
+
+  uint256 public maxCertificates = 1000;
 
   mapping (uint256 => address) public campaignIndexToOwner;
   mapping (address => uint256[]) public campaignOwnerToIndexes;
@@ -32,6 +37,7 @@ contract IGVCampaign is IGVAsset {
     string taxId;
     bool active;
     bool veto;
+    bool ready;
   }
 
   struct Certificate {
@@ -82,7 +88,8 @@ contract IGVCampaign is IGVAsset {
       campaignName: _campaignName,
       taxId: _taxId,
       active: false,
-      veto: false
+      veto: false,
+      ready: false
     });
 
     uint256 newCampaignId = campaigns.push(_campaign);
@@ -105,7 +112,7 @@ contract IGVCampaign is IGVAsset {
     internal
     returns (uint)
   {
-    require(campaignCertificateCount[_campaignId] < 65536);
+    require(campaignCertificateCount[_campaignId] < maxCertificates);
 
     Certificate memory _certificate = Certificate({
       campaignId: _campaignId,
@@ -124,6 +131,31 @@ contract IGVCampaign is IGVAsset {
     return certificateIndex;
   }
 
+  function _updateCertificate(
+    uint256 _campaignId,
+    uint256 _certificateIdx,
+    uint16 _supply,
+    string _name,
+    uint256 _price
+  )
+    internal
+  {
+    require(_certificateIdx < campaignCertificateCount[_campaignId]);
+
+    campaignCertificates[_campaignId][_certificateIdx].supply = _supply;
+    campaignCertificates[_campaignId][_certificateIdx].name = _name;
+    campaignCertificates[_campaignId][_certificateIdx].price = _price;
+  }
+
+  function withdrawCampaignBalance(uint256 _campaignId) public {
+    require(_campaignId > 0);
+    require(campaignIndexToOwner[_campaignId] == msg.sender);
+    require(campaignBalance[_campaignId] > 0);
+    uint256 _balance = campaignBalance[_campaignId];
+    campaignBalance[_campaignId] = 0;
+    msg.sender.transfer(_balance);
+  }
+
   // Views
   function getCampaign(uint256 _id)
     public
@@ -134,7 +166,8 @@ contract IGVCampaign is IGVAsset {
     string campaignName,
     string taxId,
     bool active,
-    bool veto
+    bool veto,
+    bool ready
   ) {
     Campaign storage campaign = campaigns[_id];
 
@@ -143,6 +176,7 @@ contract IGVCampaign is IGVAsset {
     taxId = campaign.taxId;
     active = campaign.active;
     veto = campaign.veto;
+    ready = campaign.ready;
   }
 
   function getCertificate(uint256 _campaignId, uint64 _certificateIdx)
@@ -209,16 +243,12 @@ contract IGVCampaign is IGVAsset {
     return campaigns.length;
   }
 
-  function getCampaignBalance(uint256 _campaignId) public view returns (uint256) {
-    return campaignBalance[_campaignId];
+  function changeMaxCertificates(uint256 _maxCertificates) public onlyOwner {
+    require(_maxCertificates <= 1000);
+    maxCertificates = _maxCertificates;
   }
 
-  function withdrawCampaignBalance(uint256 _campaignId) public {
-    require(_campaignId >  0);
-    require(campaignIndexToOwner[_campaignId] == msg.sender);
-    require(campaignBalance[_campaignId] > 0);
-    uint256 _balance = campaignBalance[_campaignId];
-    campaignBalance[_campaignId] = 0;
-    msg.sender.transfer(_balance);
+  function getCampaignBalance(uint256 _campaignId) public view returns (uint256) {
+    return campaignBalance[_campaignId];
   }
 }

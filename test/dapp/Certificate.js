@@ -34,6 +34,14 @@ contract('IGVCertificate Test', accounts => {
 
         certificate[3].should.be.equal("Test Certificate");
       })
+      it('Updates a certificate', async () => {
+        await dapp.createCertificate(1, 10, "Test Certificate", 10);
+        await dapp.updateCertificate(1, 0, 5, "Test Certificate2", 5);
+
+        const certificate = await dapp.getCertificate(1, 0);
+
+        certificate[3].should.be.equal("Test Certificate2");
+      })
       it('Tracks the total campaign certificates', async () => {
         const totalCertificates = await dapp.campaignCertificateCount(0);
 
@@ -53,6 +61,15 @@ contract('IGVCertificate Test', accounts => {
       })
       it('Cannot create a new certificate for an active campaign', async () => {
         await dapp.activateCampaign(1)
+        await assertRevert(dapp.createCertificate(1, 10, "Test Certificate", 10));
+      })
+      it('Cannot update a certificate if it does not own the campaign', async () => {
+        await dapp.createCertificate(1, 10, "Test Certificate", 10);
+        await assertRevert(dapp.updateCertificate(1, 0, 5, "Test Certificate2", 5, {from: mallory}));
+      })
+      it('Cannot add a certificate if the campaign is ready', async () => {
+        await dapp.createCertificate(1, 10, "Test Certificate", 10);
+        await dapp.readyCampaign(1);
         await assertRevert(dapp.createCertificate(1, 10, "Test Certificate", 10));
       })
     })

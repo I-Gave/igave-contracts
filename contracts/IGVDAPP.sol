@@ -5,7 +5,6 @@ import "./dapp/IGVCore.sol";
 contract IGVDAPP is IGVCore {
     function IGVDAPP() public {
     founderAddress = msg.sender;
-    ownerAddress = msg.sender;
 
     _createCampaign(msg.sender, "Genesis Campaign", "");
     _createCertificate(0, 1, "Genesis Certificate", 0);

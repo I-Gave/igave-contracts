@@ -3,19 +3,13 @@ pragma solidity 0.4.19;
 import "./IGVCampaign.sol";
 
 contract IGVCore is IGVCampaign {
-  address public founderAddress;
-  address public ownerAddress;
   uint256 public campaignEscrowAmount = 0;
   uint256 public totalRaised = 0;
 
+  event ReadyCampaign(uint256 campaignId);
   event ActivateCampaign(uint256 campaignId);
   event VetoCampaign(uint256 campaignId);
 
-  modifier onlyBy(address _account)
-  {
-    require(msg.sender == _account);
-    _;
-  }
 
   function createCampaign(
     string _campaignName,
@@ -47,9 +41,32 @@ contract IGVCore is IGVCampaign {
 
     require(campaign.active == false);
     require(campaign.veto == false);
+    require(campaign.ready == false);
 
     return _createCertificate(_campaignId, _supply, _name, _price);
   }
+
+  function updateCertificate(
+    uint256 _campaignId,
+    uint256 _certificateIdx,
+    uint16 _supply,
+    string _name,
+    uint256 _price
+  )
+    public
+  {
+    require(campaignIndexToOwner[_campaignId] == msg.sender);
+    require(_campaignId > 0);
+
+    Campaign storage campaign = campaigns[_campaignId];
+
+    require(campaign.active == false);
+    require(campaign.veto == false);
+    require(campaign.ready == false);
+
+    return _updateCertificate(_campaignId, _certificateIdx, _supply, _name, _price);
+  }
+
 
   function createToken(
     uint128 _campaignId,
@@ -80,20 +97,16 @@ contract IGVCore is IGVCampaign {
     return _createToken(_campaignId, _certificateIdx, unitNumber, msg.sender, msg.value);
   }
 
-  function vetoCampaign(uint256 _campaignId) public onlyBy(ownerAddress)  {
+   function readyCampaign(uint256 _campaignId) public {
     require(_campaignId > 0);
-    delete campaigns[_campaignId];
-    campaigns[_campaignId].veto = true;
-    campaigns[_campaignId].owner = ownerAddress;
+    require(campaignIndexToOwner[_campaignId] == msg.sender);
 
-    Certificate[] storage certificates = campaignCertificates[_campaignId];
-    for (uint i = 0; i < certificates.length; i++) {
-      delete certificates[i];
-    }
-    VetoCampaign(_campaignId);
+    campaigns[_campaignId].ready = true;
+
+    ReadyCampaign(_campaignId);
   }
 
-  function activateCampaign(uint256 _campaignId) public onlyBy(ownerAddress) {
+  function activateCampaign(uint256 _campaignId) public onlyOwner {
     require(_campaignId > 0);
     require(campaigns[_campaignId].active == false);
     require(campaigns[_campaignId].veto == false);
@@ -103,22 +116,21 @@ contract IGVCore is IGVCampaign {
     ActivateCampaign(_campaignId);
   }
 
-  // Contract Management
-  function changeEscrowAmount(
-    uint64 _campaignEscrowAmount
-  )
-    public
-    onlyBy(ownerAddress)
-  {
+  function vetoCampaign(uint256 _campaignId) public onlyOwner  {
+    require(_campaignId > 0);
+    delete campaigns[_campaignId];
+    campaigns[_campaignId].veto = true;
+    campaigns[_campaignId].owner = owner;
+
+    Certificate[] storage certificates = campaignCertificates[_campaignId];
+    for (uint256 i = 0; i < certificates.length; i++) {
+      delete certificates[i];
+    }
+    VetoCampaign(_campaignId);
+  }
+
+  function changeEscrowAmount(uint64 _campaignEscrowAmount) public onlyOwner {
     campaignEscrowAmount = _campaignEscrowAmount;
   }
 
-  function changeOwner(
-    address _newOwner
-  )
-    public
-    onlyBy(ownerAddress)
-  {
-    ownerAddress = _newOwner;
-  }
 }
