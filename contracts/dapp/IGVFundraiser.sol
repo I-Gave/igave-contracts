@@ -5,25 +5,26 @@ import '../util/SafeMath.sol';
 import './IGVAsset.sol';
 
 contract IGVFundraiser is IGVAsset, Ownable {
-  address public founderAddress;
+  address public founderAddress; // Contract launcher
 
-  Campaign[] campaigns;
-  Token[] tokens;
+  Campaign[] campaigns; // Campaigns tracked by the dapp
+  Token[] tokens;       // ERC721 Tokens tracked by the dapp
 
-  uint256 public maxCertificates = 100;
+  uint256 public maxCertificates = 100; // Max certificates a campaign may issue. Does not effect supply
 
-  mapping (uint256 => address) public campaignIndexToOwner;         // owner address for campaign
-  mapping (address => uint256[]) public campaignOwnerToIndexes;     // list of campaign ids for address
-  mapping (address => uint256) public campaignOwnerTotalCampaigns;  // count of campaigns by owner
-  mapping (uint256 => uint256) public campaignBalance;              // current campaign balance
-  mapping (uint256 => Certificate[]) public campaignCertificates;   // list of certificates for each campaign
-  mapping (uint256 => uint64) public campaignCertificateCount;      // count of certificates for each campaign
+  mapping (uint256 => address)  public      campaignIndexToOwner;         // owner address for campaign
+  mapping (address => uint256[]) public     campaignOwnerToIndexes;       // list of campaign ids for address
+  mapping (address => uint256) public       campaignOwnerTotalCampaigns;  // count of campaigns by owner
+  mapping (uint256 => uint256) public       campaignBalance;              // current campaign balance
+  mapping (uint256 => Certificate[]) public campaignCertificates;         // list of certificates for each campaign
+  mapping (uint256 => uint64) public        campaignCertificateCount;     // count of certificates for each campaign
 
-  event CreateCampaign(address indexed owner, uint256 indexed campaignId);
-  event CreateCertificate(uint256 indexed campaignId, string name);
-  event UpdateCertificate(uint256 indexed campaignId, uint256 indexed certificateIdx);
-  event CreateToken(uint256 indexed campaignId, uint256 indexed certificateIdx, address owner);
-  event WithdrawBalance(uint256 indexed campaignId, uint256 balance);
+
+  event CreateCampaign(address indexed owner, uint256 indexed campaignId); // Campaign has been created
+  event CreateCertificate(uint256 indexed campaignId, string name);        // Certificate added to campaign
+  event UpdateCertificate(uint256 indexed campaignId, uint256 indexed certificateIdx); // Certificate has been updated
+  event CreateToken(uint256 indexed campaignId, uint256 indexed certificateIdx, address owner); // Token has been purchased
+  event WithdrawBalance(uint256 indexed campaignId, uint256 balance); // Campaign owner withdraws campaign balance
 
   struct Token {
     uint256 campaignId;
@@ -50,6 +51,7 @@ contract IGVFundraiser is IGVAsset, Ownable {
     string name;
   }
 
+  // Issues an ERC-721 token
   function _createToken(
     uint256 _campaignId,
     uint16 _certificateIdx,
@@ -78,7 +80,7 @@ contract IGVFundraiser is IGVAsset, Ownable {
     return newTokenId;
   }
 
-
+  // Tracks a new campaign
   function _createCampaign(
     address _owner,
     string _campaignName,
@@ -107,6 +109,7 @@ contract IGVFundraiser is IGVAsset, Ownable {
     return newCampaignId;
   }
 
+  // Adds a certificate to an inactive campaign
   function _createCertificate(
     uint256 _campaignId,
     uint16 _supply,
@@ -134,6 +137,7 @@ contract IGVFundraiser is IGVAsset, Ownable {
     return certificateIndex;
   }
 
+  // Changes the attributes of an existing certificate
   function _updateCertificate(
     uint256 _campaignId,
     uint256 _certificateIdx,
@@ -152,6 +156,7 @@ contract IGVFundraiser is IGVAsset, Ownable {
     UpdateCertificate(_campaignId, _certificateIdx);
   }
 
+  // Campaign owner withdraws campaign balance;
   function withdrawCampaignBalance(uint256 _campaignId) public {
     require(_campaignId > 0);
     require(campaignIndexToOwner[_campaignId] == msg.sender);
@@ -161,6 +166,12 @@ contract IGVFundraiser is IGVAsset, Ownable {
     msg.sender.transfer(_balance);
 
     WithdrawBalance(_campaignId, _balance);
+  }
+
+  // Hard cap at 1000 Certificates. Well under Veto gas limits.
+  function changeMaxCertificates(uint256 _maxCertificates) public onlyOwner {
+    require(_maxCertificates <= 1000);
+    maxCertificates = _maxCertificates;
   }
 
   // Views
@@ -248,12 +259,6 @@ contract IGVFundraiser is IGVAsset, Ownable {
 
   function totalCampaigns() public view returns (uint256) {
     return campaigns.length - 1;
-  }
-
-  function changeMaxCertificates(uint256 _maxCertificates) public onlyOwner {
-    // Hard cap at 1000 Certificates. Well under Veto gas limits.
-    require(_maxCertificates <= 1000);
-    maxCertificates = _maxCertificates;
   }
 
   function getCampaignBalance(uint256 _campaignId) public view returns (uint256) {
