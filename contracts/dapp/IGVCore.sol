@@ -10,7 +10,6 @@ contract IGVCore is IGVCampaign {
   event ActivateCampaign(uint256 campaignId);
   event VetoCampaign(uint256 campaignId);
 
-
   function createCampaign(
     string _campaignName,
     string _taxid
@@ -67,7 +66,6 @@ contract IGVCore is IGVCampaign {
     return _updateCertificate(_campaignId, _certificateIdx, _supply, _name, _price);
   }
 
-
   function createToken(
     uint128 _campaignId,
     uint16 _certificateIdx
@@ -110,6 +108,7 @@ contract IGVCore is IGVCampaign {
     require(_campaignId > 0);
     require(campaigns[_campaignId].active == false);
     require(campaigns[_campaignId].veto == false);
+    require(campaignCertificates[_campaignId].length > 0);
 
     campaigns[_campaignId].active = true;
 

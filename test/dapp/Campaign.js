@@ -30,6 +30,7 @@ contract('IGVCampaign Test', accounts => {
       })
       it('Activates a campaign', async () => {
         await dapp.createCampaign('Test Campaign', '501cid');
+        await dapp.createCertificate(1, 10, "Test Certificate", 10);
         await dapp.activateCampaign(1);
 
         const campaign = await dapp.getCampaign(1);
@@ -53,6 +54,7 @@ contract('IGVCampaign Test', accounts => {
       })
       it('Vetos an active campaign', async () => {
         await dapp.createCampaign('Test Campaign', '501cid');
+        await dapp.createCertificate(1, 10, "Test Certificate", 10);
         await dapp.activateCampaign(1)
         await dapp.vetoCampaign(1)
 
@@ -75,8 +77,13 @@ contract('IGVCampaign Test', accounts => {
         campaignId.should.be.bignumber.equal(1);
       })
       it('Tracks the total campaigns', async () => {
-        const totalCampaigns = await dapp.totalCampaigns();
+        let totalCampaigns = await dapp.totalCampaigns();
 
+        totalCampaigns.should.be.bignumber.equal(0);
+
+        await dapp.createCampaign('Test Campaign', '501cid');
+
+        totalCampaigns = await dapp.totalCampaigns();
         totalCampaigns.should.be.bignumber.equal(1);
       })
       it('Tracks the campaign balance', async () => {
@@ -116,8 +123,13 @@ contract('IGVCampaign Test', accounts => {
       it('Fails to create a campaign if the escrow amount is incorrect', async () => {
         await assertRevert(dapp.createCampaign('Test Campaign', '501cid', {value: 10}));
       })
+      it('Fails to activate a campaign if there are no certificates', async () => {
+        await dapp.createCampaign('Test Campaign', '501cid');
+        await assertRevert(dapp.activateCampaign(1));
+      })
       it('Fails to create a cert if the campaign is active', async () => {
         await dapp.createCampaign('Test Campaign', '501cid');
+        await dapp.createCertificate(1, 10, "Test Certificate", 10);
         await dapp.activateCampaign(1);
         await assertRevert(dapp.createCertificate(1, 10, "Test Certificate", 10));
       })

@@ -68,14 +68,14 @@ export class DashboardComponent implements OnInit {
     let total = 10;
     let totalTokens = this.totalSupply-1;
 
-    while (total >= 0 && totalTokens >= 0) {
-      let certificate = await this.instance.getToken(totalTokens);
+    while (total > 0 && totalTokens > 0) {
+      let token = await this.instance.getToken(totalTokens);
 
-      let campaignId = certificate[0].toNumber();
-      let tokenIdx = certificate[1].toNumber();
+      let campaignId = token[0].toNumber();
+      let tokenIdx = token[4].toNumber();
 
-      let token = await this.instance.getCertificate(campaignId, tokenIdx);
-
+      let certificate = await this.instance.getCertificate(campaignId, tokenIdx);
+      console.log(token)
       let tokenName = token[3];
       let issueNumber = certificate[2].toNumber();
       let remaining = token[2].toNumber();

@@ -20,15 +20,15 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr *ngFor="let campaign of campaigns" [routerLink]="['/campaigns/view', campaign.id]">
-                                    <td>{{campaign.id}}</td>
-                                    <td>{{campaign.name}}</td>
-                                    <td>{{campaign.ready}}</td>
-                                    <td>{{campaign.active}}</td>
-                                    <td>{{campaign.veto}}</td>
-                                    <td class="text-primary"><i class="fab fa-ethereum"></i> 0</td>
+                                <tr *ngFor="let campaign of campaigns">
+                                    <td [routerLink]="['/campaigns/view', campaign.id]">{{campaign.id}}</td>
+                                    <td [routerLink]="['/campaigns/view', campaign.id]">{{campaign.name}}</td>
+                                    <td [routerLink]="['/campaigns/view', campaign.id]">{{campaign.ready}}</td>
+                                    <td [routerLink]="['/campaigns/view', campaign.id]">{{campaign.active}}</td>
+                                    <td [routerLink]="['/campaigns/view', campaign.id]">{{campaign.veto}}</td>
+                                    <td><button (click)="activateCampaign(campaign.id)">Activate</button></td>
+                                    <td><button (click)="vetoCampaign(campaign.id)">Veto</button></td>
                                 </tr>
-
                             </tbody>
                         </table>
                     </div>
