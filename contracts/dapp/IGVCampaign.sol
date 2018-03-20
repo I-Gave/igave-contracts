@@ -10,7 +10,7 @@ contract IGVCampaign is IGVAsset, Ownable {
   Campaign[] campaigns;
   Token[] tokens;
 
-  uint256 public maxCertificates = 1000;
+  uint256 public maxCertificates = 100;
 
   mapping (uint256 => address) public campaignIndexToOwner;         // owner address for campaign
   mapping (address => uint256[]) public campaignOwnerToIndexes;     // list of campaign ids for address
@@ -21,8 +21,9 @@ contract IGVCampaign is IGVAsset, Ownable {
 
   event CreateCampaign(address indexed owner, uint256 indexed campaignId);
   event CreateCertificate(uint256 indexed campaignId, string name);
-  event UpdateCertificate(uint256 indexed campaignId, uint16 indexed certificateIdx);
-  event CreateToken(uint256 indexed campaignId, uint16 indexed certificateIdx, address owner);
+  event UpdateCertificate(uint256 indexed campaignId, uint256 indexed certificateIdx);
+  event CreateToken(uint256 indexed campaignId, uint256 indexed certificateIdx, address owner);
+  event WithdrawBalance(uint256 indexed campaignId, uint256 balance);
 
   struct Token {
     uint256 campaignId;
@@ -158,6 +159,8 @@ contract IGVCampaign is IGVAsset, Ownable {
     uint256 _balance = campaignBalance[_campaignId];
     campaignBalance[_campaignId] = 0;
     msg.sender.transfer(_balance);
+
+    WithdrawBalance(_campaignId, _balance);
   }
 
   // Views
