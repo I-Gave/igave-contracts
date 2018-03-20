@@ -1,0 +1,39 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header" data-background-color="igave">
+                        <h4 class="title">Campaigns</h4>
+                        <p class="category">Historical list of campaigns.</p>
+                        <button class="btn btn-white btn-round btn-just-icon"><a [routerLink]="['/campaigns/create']"><i class="fas fa-plus text-primary"></i></a></button>
+                    </div>
+                    <div class="card-content table-responsive">
+                        <table class="table">
+                            <thead class="primary-text">
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>Ready</th>
+                                    <th>Active</th>
+                                    <th>Veto</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let campaign of campaigns" [routerLink]="['/campaigns/view', campaign.id]">
+                                    <td>{{campaign.id}}</td>
+                                    <td>{{campaign.name}}</td>
+                                    <td>{{campaign.ready}}</td>
+                                    <td>{{campaign.active}}</td>
+                                    <td>{{campaign.veto}}</td>
+                                    <td class="text-primary"><i class="fab fa-ethereum"></i> 0</td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

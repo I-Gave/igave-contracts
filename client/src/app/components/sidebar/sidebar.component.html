@@ -1,0 +1,32 @@
+<div class="logo">
+    <a href="https://www.igave.io" class="simple-text">
+        <div class="logo-img">
+            <img src="/assets/img/IGAVE-Ethereum-Blue.png"/>
+        </div>
+        I Gave
+    </a>
+</div>
+<div class="sidebar-wrapper">
+    <form class="navbar-form navbar-right" role="search" *ngIf="isMobileMenu()">
+        <div class="form-group form-black is-empty">
+            <input type="text" class="form-control" placeholder="Search">
+            <span class="material-input"></span>
+        </div>
+        <button type="submit" class="btn btn-white btn-round btn-just-icon">
+            <i class="material-icons">search</i><div class="ripple-container"></div>
+        </button>
+    </form>
+
+
+    <div class="nav-container">
+        <ul class="nav">
+            <li routerLinkActive="active" *ngFor="let menuItem of menuItems" class="{{menuItem.class}}" >
+                <a [routerLink]="[menuItem.path]">
+                   <i class="material-icons" *ngIf="menuItem.faclass == ''">{{menuItem.icon}}</i>
+                   <i class="{{menuItem.faclass}}" *ngIf="menuItem.faclass != ''"></i>
+                   <p>{{menuItem.title}}</p>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>

@@ -1,0 +1,14 @@
+
+.card-avatar img {
+  background-color: #fff;
+}
+
+.card-title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.address {
+  font-size: 1.2rem;
+}

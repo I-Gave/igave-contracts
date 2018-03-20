@@ -1,0 +1,66 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-8">
+        <div class="card">
+          <div class="card-header" data-background-color="igave">
+            <h4 class="title">Start a new Campaign</h4>
+            <p class="category">Current Escrow is set at .1 Ether</p>
+          </div>
+          <div class="card-content">
+            <form>
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group form-black label-floating is-empty">
+                    <label class="control-label">Campaign Name</label>
+                    <input type="text" class="form-control"
+                     [value]="campaignName" (input)="campaignName = $event.target.value">
+                  </div>
+                </div>
+                <div class="col-md-12">
+                  <div class="form-group form-black label-floating is-empty">
+                    <label class="control-label">Tax Id</label>
+                    <input type="text" class="form-control"
+                     [value]="taxId" (input)="taxId = $event.target.value">
+                  </div>
+                </div>
+
+                <div class="col-md-12">
+                  <div class="form-group form-black label-floating is-empty">
+                    <label class="control-label">{{owner}}</label>
+                    <input type="text" class="form-control" disabled>
+                  </div>
+                </div>
+              </div>
+
+
+              <button type="submit" class="btn btn-primary pull-right" (click)="createCampaign()">Create Campaign</button>
+              <div class="clearfix"></div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card card-profile">
+          <div class="card-avatar">
+            <a href="#">
+                        <img class="img" src="/assets/img/IGAVE-Ethereum-Blue.png" />
+                    </a>
+          </div>
+
+          <div class="content">
+            <h6 class="category text-gray">Create a Campaign</h6>
+            <h4 class="card-title">{{campaignName}}</h4>
+            <h4 class="card-title" *ngIf="startBlock">Start Block: {{startBlock}}</h4>
+            <h4 class="card-title" *ngIf="endBlock">End Block: {{endBlock}}</h4>
+            <h4 class="card-title" *ngIf="taxId">Tax Id: {{taxId}}</h4>
+            <p  class="card-title" *ngIf="owner">{{owner}}</p>
+            <p class="card-content">
+
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

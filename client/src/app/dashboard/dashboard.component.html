@@ -1,0 +1,193 @@
+<div class="main-content">
+
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-3 col-md-6 col-sm-6">
+                    <div class="card card-stats">
+                        <div class="card-header" data-background-color="igave">
+                            <i class="material-icons">event</i>
+                        </div>
+                        <div class="card-content">
+                            <p class="category">Total Campaigns</p>
+                            <h3 class="title">{{totalCampaigns}}</h3>
+                        </div>
+                        <div class="card-footer">
+                            <div class="stats" [routerLink]="['/campaigns']">
+                                0 active campaigns
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-6">
+                    <div class="card card-stats">
+                        <div class="card-header" data-background-color="igave">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                        <div class="card-content">
+                            <p class="category">Donations Made</p>
+                            <h3 class="title">{{totalSupply}}</h3>
+                        </div>
+                        <div class="card-footer">
+                            <div class="stats">
+                                Average donation
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-6">
+                    <div class="card card-stats" >
+                        <div class="card-header" data-background-color="igave">
+                            <i class="fab fa-ethereum"></i>
+                        </div>
+                        <div class="card-content">
+                            <p class="category">Ether Raised</p>
+                            <h3 class="title">{{totalRaised}}</h3>
+                        </div>
+                        <div class="card-footer">
+                            <div class="stats">
+                                Total
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-6 col-sm-6">
+                    <div class="card card-stats" >
+                        <div class="card-header" data-background-color="igave">
+                            <i class="material-icons">person</i>
+                        </div>
+                        <div class="card-content">
+                            <p class="category">Top Giver</p>
+                            <h3 class="title">0x</h3>
+                        </div>
+                        <div class="card-footer">
+                            <div class="stats">
+                                Total
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+<!--
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="card" >
+                        <div class="card-header card-chart" data-background-color="igave">
+                            <div class="ct-chart" id="dailySalesChart"></div>
+                        </div>
+                        <div class="card-content">
+                            <h4 class="title">Daily Sales</h4>
+                            <p class="category"><span class="text-success"><i class="fa fa-long-arrow-up"></i> 55%  </span> increase in today sales.</p>
+                        </div>
+                        <div class="card-footer">
+                            <div class="stats">
+                                <i class="material-icons">access_time</i> updated 4 minutes ago
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="card" >
+                        <div class="card-header card-chart" data-background-color="igave">
+                            <div class="ct-chart" id="emailsSubscriptionChart"></div>
+                        </div>
+                        <div class="card-content">
+                            <h4 class="title">Email Subscriptions</h4>
+                            <p class="category">Last Campaign Performance</p>
+                        </div>
+                        <div class="card-footer">
+                            <div class="stats">
+                                <i class="material-icons">access_time</i> campaign sent 2 days ago
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="card" >
+                        <div class="card-header card-chart" data-background-color="igave">
+                            <div class="ct-chart" id="completedTasksChart"></div>
+                        </div>
+                        <div class="card-content">
+                            <h4 class="title">Completed Tasks</h4>
+                            <p class="category">Last Campaign Performance</p>
+                        </div>
+                        <div class="card-footer">
+                            <div class="stats">
+                                <i class="material-icons">access_time</i> campaign sent 2 days ago
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+-->
+            <div class="row">
+                <div class="col-md-12 col-lg-6">
+                    <div class="card">
+                        <div class="card-header" data-background-color="igave">
+                            <h4 class="title">Last 10 Campaigns</h4>
+                            <p class="category">Recently created campaigns</p>
+                        </div>
+                        <div class="card-content table-responsive">
+                            <table class="table">
+                                <thead class="primary-text">
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Name</th>
+                                        <th>Ready</th>
+                                        <th>Active</th>
+                                        <th>Veto</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let campaign of lastCampaigns" [routerLink]="['/campaigns/view', campaign.id]">
+                                        <td>{{campaign.id}}</td>
+                                        <td>{{campaign.name}}</td>
+                                        <td>{{campaign.ready}}</td>
+                                        <td>{{campaign.active}}</td>
+                                        <td>{{campaign.veto}}</td>
+                                        <td class="text-primary"><i class="fab fa-ethereum"></i> 0</td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 col-lg-6">
+                    <div class="card">
+                        <div class="card-header" data-background-color="igave">
+                            <h4 class="title">Latest Token Purchases</h4>
+                            <p class="category">Last 10 token purchases.</p>
+                        </div>
+                        <div class="card-content table-responsive">
+                            <table class="table">
+                                <thead class="primary-text">
+                                    <tr>
+                                        <th>Campaign</th>
+                                        <th>ID</th>
+                                        <th>Name</th>
+                                        <th>Issue Number</th>
+                                        <th>Remaining</th>
+                                        <th>Price</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let token of lastTokens" [routerLink]="['/campaigns/view', token.campaignId]">
+                                        <td>{{token.campaignId}}</td>
+                                        <td>{{token.tokenIdx}}</td>
+                                        <td>{{token.tokenName}}</td>
+                                        <td>{{token.issueNumber}}</td>
+                                        <td>{{token.remaining}}</td>
+                                        <td>{{token.price}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+</div>

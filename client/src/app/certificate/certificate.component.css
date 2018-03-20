@@ -1,0 +1,37 @@
+.wrapper {
+  background-image: url('/assets/img/regal.png');
+  border: 2px solid #51597e;
+  height: 950px;
+  max-height: 65%;
+}
+
+h1, h2, h3 {
+  text-align: center;
+  font-weight: 600;
+}
+
+h4 {
+  text-align: center;
+}
+
+.border {
+  background-image: url('/assets/img/igvwatermark.png');
+  background-size:     cover;
+  background-repeat:   no-repeat;
+  background-position: center center;
+  height: 100%;
+}
+
+p {
+  text-align: center;
+}
+
+.content {
+  margin: 0 auto;
+  margin-top: 200px;
+  width: 65%;
+}
+
+.issue {
+  margin-top: 125px;
+}

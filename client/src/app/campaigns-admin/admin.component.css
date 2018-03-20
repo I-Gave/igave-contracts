@@ -1,0 +1,12 @@
+.card-header  {
+  clear: both;
+}
+.card-header button {
+  float: right;
+  bottom: 60px;
+}
+
+[ng-reflect-router-link] {
+  color: #51597e;
+  cursor: pointer;
+}

@@ -1,0 +1,16 @@
+
+.card-avatar img {
+  background-color: #fff;
+}
+
+label {
+  left: 0;
+}
+
+.card form div {
+  padding-left: 0;
+}
+
+.form-group {
+  margin-top: 0;
+}

@@ -1,0 +1,34 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <h1>Getting Started</h1>
+            <div class="col-xs-12 col-md-4 col-md-offset-4">
+                <h3>Step 1</h3>
+                <p>Connect Metamask to our testnet: http://45.76.250.111:9546</p>
+                <img src="assets/img/MetaMask1.png">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-md-4 col-md-offset-4">
+                <h3>Step 2</h3>
+                <p>You should automatically receive some Ether at:</p>
+                <p>{{addr}}</p>
+                <p>But here's a faucet button just in case.</p>
+                <p>(There may be a delay until the block is mined)</p>
+                <button class="btn btn-primary" (click)="getEther()">Get Ether</button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-md-4 col-md-offset-4">
+                <h3>Step 3</h3>
+                <p>Check the Campaign Section to purchase test tokens.</p>
+                <p>View your tokens under the I Gave section.</p>
+                <p>Creating new campaigns is disabled for now.</p>
+                <p>Metamask sometimes has issues with event logs when switching between accounts <a href="https://github.com/MetaMask/metamask-extension/issues/2393">(Issue 2393)</a>.
+                If you create a new account and cannot see tokens under the "I Gave" tab, but see them on the dashboard close
+                and re-open your browser.</p>
+            </div>
+
+        </div>
+    </div>
+</div>

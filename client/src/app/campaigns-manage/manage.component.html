@@ -1,0 +1,94 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-5 col-sm-offset-1 col-lg-3 col-lg-offset-3">
+        <div class="card card-profile">
+          <div class="card-avatar">
+            <a href="#">
+                        <img class="img" src="/assets/img/IGAVE-Ethereum-Blue.png" />
+                    </a>
+          </div>
+
+          <div class="content">
+            <h6 class="category text-gray">{{campaign.name}}</h6>
+            <h4 class="card-title">I Gave</h4>
+
+            <div class="card-content">
+            <form class="newtoken">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group form-black label-floating is-empty">
+                    <label class="control-label">Token Name</label>
+                    <input type="text" class="form-control" [value]="newToken.name" (input)="newToken.name = $event.target.value">
+                  </div>
+                </div>
+                <div class="col-md-12">
+                  <div class="form-group form-black label-floating is-empty">
+                    <label class="control-label">Token Supply</label>
+                    <input type="text" class="form-control" [value]="newToken.supply" (input)="newToken.supply = $event.target.value">
+                  </div>
+                </div>
+                <div class="col-md-12">
+                  <div class="form-group form-black label-floating is-empty">
+                    <label class="control-label">Token Value (Eth)</label>
+                    <input type="text" class="form-control" [value]="newToken.value" (input)="newToken.value = $event.target.value">
+                  </div>
+                </div>
+              </div>
+              <button type="submit" class="btn btn-primary" (click)="createToken()">Add Token to Campaign</button>
+              <div class="clearfix"></div>
+            </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-5 col-lg-3">
+        <div class="card card-profile">
+          <div class="card-avatar">
+            <a href="#">
+                        <img class="img" src="/assets/img/IGAVE-Ethereum-Blue.png" />
+                    </a>
+          </div>
+
+          <div class="content">
+            <h6 class="category text-gray">{{campaign.name}}</h6>
+            <h4 class="card-title">I Gave</h4>
+            <h6 class="card-title">{{newToken.name}}</h6>
+            <h4 class="card-title" *ngIf="newToken.supply">1 / {{newToken.supply}}</h4>
+            <h4 class="card-title" *ngIf="newToken.value">{{newToken.value}} Ether</h4>
+            <p class="card-content">
+
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+
+    <div class="col-sm-5 col-lg-3" *ngFor="let token of tokens">
+      <div class="card card-profile">
+        <div class="card-avatar">
+          <a href="#">
+            <img class="img" src="/assets/img/IGAVE-Ethereum-Blue.png" />
+          </a>
+        </div>
+
+        <div class="content">
+          <h6 class="category text-gray"></h6>
+          <h4 class="card-title">I Gave</h4>
+          <h6 class="card-title">{{campaign.name}}</h6>
+          <h6 class="card-title">{{token.name}}</h6>
+          <h4 class="card-title">{{token.supply}} Total</h4>
+          <h4 class="card-title">{{token.remaining}} Remain</h4>
+          <h4 class="card-title">{{token.value}} Ether</h4>
+          <p class="card-content">
+          <button type="submit" class="btn btn-primary" (click)="getButton(token.campaign, token.index, token.value)">Get Embedded HTML</button>
+          </p>
+        </div>
+      </div>
+</div>
+
+
+    </div>
+  </div>
+</div>
