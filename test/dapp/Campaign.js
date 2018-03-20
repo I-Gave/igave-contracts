@@ -12,7 +12,7 @@ require('chai')
 
 const expect = require('chai').expect
 
-contract('IGVCampaign Test', accounts => {
+contract('IGVFundraiser', accounts => {
   const [creator, user, anotherUser, operator, mallory] = accounts
   let dapp = null
   let escrow = null;
@@ -22,7 +22,7 @@ contract('IGVCampaign Test', accounts => {
     escrow = await dapp.campaignEscrowAmount();
   })
 
-  describe('IGVCampaign', () => {
+  describe('Tests', () => {
     describe('Campaigns', async () => {
       it('Has a genesis campaign', async () => {
         const campaign = await dapp.getCampaign(0);
@@ -168,7 +168,7 @@ contract('IGVCampaign Test', accounts => {
       it('Campaigns have a maximum number of certificates', async () => {
         const max = await dapp.maxCertificates();
 
-        max.should.be.bignumber.equal(1000);
+        max.should.be.bignumber.equal(100);
       })
       it('Changes the max certificates', async () => {
         await dapp.changeMaxCertificates(100);

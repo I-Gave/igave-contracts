@@ -1,15 +1,16 @@
 pragma solidity 0.4.19;
 
-import "./IGVCampaign.sol";
+import "./IGVFundraiser.sol";
 
-contract IGVCore is IGVCampaign {
-  uint256 public campaignEscrowAmount = 0;
-  uint256 public totalRaised = 0;
+contract IGVCore is IGVFundraiser {
+  uint256 public campaignEscrowAmount = 0; // Required escrow to create a campaign. Default, zero
+  uint256 public totalRaised = 0;          // Total funds raised by the contract
 
-  event ReadyCampaign(uint256 campaignId);
-  event ActivateCampaign(uint256 campaignId);
-  event VetoCampaign(uint256 campaignId);
+  event ReadyCampaign(uint256 campaignId);    // Campaign owner has marked campaign ready for activation
+  event ActivateCampaign(uint256 campaignId); // Contract owner has marked campaign active
+  event VetoCampaign(uint256 campaignId);     // Contract owner has removed a campaign from the dapp
 
+  // Create a new campaign. Must include escrow amount in tx.
   function createCampaign(
     string _campaignName,
     string _taxid
@@ -24,7 +25,7 @@ contract IGVCore is IGVCampaign {
     campaignBalance[campaignId] += campaignEscrowAmount;
     return campaignId;
   }
-
+  // Add a certificate to an existing campaign. Must be the campaign owner. Returns the new certificate index.
   function createCertificate(
     uint256 _campaignId,
     uint16 _supply,
@@ -44,7 +45,7 @@ contract IGVCore is IGVCampaign {
 
     return _createCertificate(_campaignId, _supply, _name, _price);
   }
-
+  // Change the values of an existing certificate. Campaign cannot be active. Must be campaign owner.
   function updateCertificate(
     uint256 _campaignId,
     uint256 _certificateIdx,
@@ -65,7 +66,7 @@ contract IGVCore is IGVCampaign {
 
     return _updateCertificate(_campaignId, _certificateIdx, _supply, _name, _price);
   }
-
+  // Make a donation and issue the ERC-721 token for a campaign & certificate. Must include certificate price in tx.
   function createToken(
     uint128 _campaignId,
     uint16 _certificateIdx
@@ -95,7 +96,8 @@ contract IGVCore is IGVCampaign {
     return _createToken(_campaignId, _certificateIdx, unitNumber, msg.sender, msg.value);
   }
 
-   function readyCampaign(uint256 _campaignId) public {
+  // Campaign owner marks their campaign ready for activation
+  function readyCampaign(uint256 _campaignId) public {
     require(_campaignId > 0);
     require(campaignIndexToOwner[_campaignId] == msg.sender);
 
@@ -104,6 +106,7 @@ contract IGVCore is IGVCampaign {
     ReadyCampaign(_campaignId);
   }
 
+  // Contract owner marks a campaign active.
   function activateCampaign(uint256 _campaignId) public onlyOwner {
     require(_campaignId > 0);
     require(campaigns[_campaignId].active == false);
@@ -115,6 +118,7 @@ contract IGVCore is IGVCampaign {
     ActivateCampaign(_campaignId);
   }
 
+  // Contract owner removes a campaign
   function vetoCampaign(uint256 _campaignId) public onlyOwner  {
     require(_campaignId > 0);
     delete campaigns[_campaignId];
@@ -128,6 +132,7 @@ contract IGVCore is IGVCampaign {
     VetoCampaign(_campaignId);
   }
 
+  // Contract owner changes the amount required to start a campaign
   function changeEscrowAmount(uint64 _campaignEscrowAmount) public onlyOwner {
     campaignEscrowAmount = _campaignEscrowAmount;
   }

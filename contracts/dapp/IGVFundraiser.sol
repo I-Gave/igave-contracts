@@ -4,7 +4,7 @@ import '../util/Ownable.sol';
 import '../util/SafeMath.sol';
 import './IGVAsset.sol';
 
-contract IGVCampaign is IGVAsset, Ownable {
+contract IGVFundraiser is IGVAsset, Ownable {
   address public founderAddress;
 
   Campaign[] campaigns;
