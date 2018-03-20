@@ -2,22 +2,37 @@
 
 ### Files
 ```
-IGVCore 			- High-level campaign, certificate and token function calls.
-IGVFundraiser 		- Logic and storage for campaigns, certificates and issuing tokens
-IGVAsset 			- IGV Metadata for ERC-721
-ERC721Token.sol 	- Base OpenZeppelin ERC-721 contract
+IGVCore
+High-level campaign, certificate and token function calls.
+
+IGVFundraiser
+Logic and storage for campaigns, certificates and issuing tokens
+
+IGVAsset
+IGV Metadata for ERC-721
+
+ERC721Token.sol
+Base OpenZeppelin ERC-721 contract
 ```
 
 #### IGVCore.sol
 ```
 // Variables
-uint256 public campaignEscrowAmount = 0; 	// Required escrow to create a campaign. Default, zero
-uint256 public totalRaised = 0; 		 	// Total funds raised by the contract
+// Required escrow to create a campaign. Default, zero
+uint256 public campaignEscrowAmount = 0;
+
+// Total funds raised by the contract
+uint256 public totalRaised = 0;
 
 // Event logging
-event ReadyCampaign(uint256 campaignId);	// Campaign owner has marked campaign ready for activation
-event ActivateCampaign(uint256 campaignId); // Contract owner has marked campaign active
-event VetoCampaign(uint256 campaignId);		// Contract owner has removed a campaign from the dapp
+// Campaign owner has marked campaign ready for activation
+event ReadyCampaign(uint256 campaignId);
+
+// Contract owner has marked campaign active
+event ActivateCampaign(uint256 campaignId);
+
+// Contract owner has removed a campaign from the dapp
+event VetoCampaign(uint256 campaignId);
 
 // Create a new campaign. Must include escrow amount in tx.
 function createCampaign(string _campaignName, string _taxid) public payable returns (uint);
