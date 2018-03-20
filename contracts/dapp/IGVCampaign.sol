@@ -112,7 +112,6 @@ contract IGVCampaign is IGVAsset, Ownable {
     internal
     returns (uint)
   {
-    require(campaignCertificateCount[_campaignId] < maxCertificates);
 
     Certificate memory _certificate = Certificate({
       campaignId: _campaignId,
@@ -239,11 +238,12 @@ contract IGVCampaign is IGVAsset, Ownable {
     id = campaignOwnerToIndexes[_owner][_index];
   }
 
-  function totalCampaigns() public view returns (uint) {
-    return campaigns.length;
+  function totalCampaigns() public view returns (uint256) {
+    return campaigns.length - 1;
   }
 
   function changeMaxCertificates(uint256 _maxCertificates) public onlyOwner {
+    // Hard cap at 1000 Certificates. Well under Veto gas limits.
     require(_maxCertificates <= 1000);
     maxCertificates = _maxCertificates;
   }

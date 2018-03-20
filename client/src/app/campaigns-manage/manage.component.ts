@@ -56,9 +56,9 @@ export class ManageCampaignsComponent {
     }
 
     let t = await instance.campaignCertificateCount(this.id);
-    console.log(t)
+
     for (let i = 0; i < t; i++) {
-      let t = await instance.getToken(this.id, i);
+      let t = await instance.getCertificate(this.id, i);
 
       this.tokens.push({
         campaign: this.id,

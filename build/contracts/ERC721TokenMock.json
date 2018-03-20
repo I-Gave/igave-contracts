@@ -263,7 +263,7 @@
       "absolutePath": "/home/hayek/proj/igave-contracts/contracts/mocks/ERC721.mock.sol",
       "exportedSymbols": {
         "ERC721TokenMock": [
-          2452
+          2592
         ]
       }
     },
@@ -277,43 +277,43 @@
             ".18"
           ]
         },
-        "id": 2415,
+        "id": 2555,
         "name": "PragmaDirective",
         "src": "0:24:14"
       },
       {
         "attributes": {
-          "SourceUnit": 1565,
+          "SourceUnit": 1560,
           "absolutePath": "/home/hayek/proj/igave-contracts/contracts/dapp/IGVAsset.sol",
           "file": "../dapp/IGVAsset.sol",
-          "scope": 2453,
+          "scope": 2593,
           "symbolAliases": [
             null
           ],
           "unitAlias": ""
         },
-        "id": 2416,
+        "id": 2556,
         "name": "ImportDirective",
         "src": "26:30:14"
       },
       {
         "attributes": {
           "contractDependencies": [
-            1564,
-            3139,
-            3637
+            1559,
+            3279,
+            3777
           ],
           "contractKind": "contract",
           "documentation": "@title ERC721TokenMock\nThis mock just provides a public mint and burn functions for testing purposes.",
           "fullyImplemented": true,
           "linearizedBaseContracts": [
-            2452,
-            1564,
-            3637,
-            3139
+            2592,
+            1559,
+            3777,
+            3279
           ],
           "name": "ERC721TokenMock",
-          "scope": 2453
+          "scope": 2593
         },
         "children": [
           {
@@ -327,15 +327,15 @@
                 "attributes": {
                   "contractScope": null,
                   "name": "IGVAsset",
-                  "referencedDeclaration": 1564,
+                  "referencedDeclaration": 1559,
                   "type": "contract IGVAsset"
                 },
-                "id": 2417,
+                "id": 2557,
                 "name": "UserDefinedTypeName",
                 "src": "202:8:14"
               }
             ],
-            "id": 2418,
+            "id": 2558,
             "name": "InheritanceSpecifier",
             "src": "202:8:14"
           },
@@ -346,7 +346,7 @@
               "isConstructor": true,
               "name": "ERC721TokenMock",
               "payable": false,
-              "scope": 2452,
+              "scope": 2592,
               "stateMutability": "nonpayable",
               "superFunction": null,
               "visibility": "public"
@@ -359,7 +359,7 @@
                   ]
                 },
                 "children": [],
-                "id": 2419,
+                "id": 2559,
                 "name": "ParameterList",
                 "src": "239:2:14"
               },
@@ -370,7 +370,7 @@
                   ]
                 },
                 "children": [],
-                "id": 2422,
+                "id": 2562,
                 "name": "ParameterList",
                 "src": "263:0:14"
               },
@@ -387,16 +387,16 @@
                       "overloadedDeclarations": [
                         null
                       ],
-                      "referencedDeclaration": 3637,
+                      "referencedDeclaration": 3777,
                       "type": "type(contract ERC721Token)",
                       "value": "ERC721Token"
                     },
-                    "id": 2420,
+                    "id": 2560,
                     "name": "Identifier",
                     "src": "242:11:14"
                   }
                 ],
-                "id": 2421,
+                "id": 2561,
                 "name": "ModifierInvocation",
                 "src": "242:13:14"
               },
@@ -407,12 +407,12 @@
                   ]
                 },
                 "children": [],
-                "id": 2423,
+                "id": 2563,
                 "name": "Block",
                 "src": "263:3:14"
               }
             ],
-            "id": 2424,
+            "id": 2564,
             "name": "FunctionDefinition",
             "src": "215:51:14"
           },
@@ -426,7 +426,7 @@
               ],
               "name": "mint",
               "payable": false,
-              "scope": 2452,
+              "scope": 2592,
               "stateMutability": "nonpayable",
               "superFunction": null,
               "visibility": "public"
@@ -438,7 +438,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "_to",
-                      "scope": 2439,
+                      "scope": 2579,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "address",
@@ -451,12 +451,12 @@
                           "name": "address",
                           "type": "address"
                         },
-                        "id": 2425,
+                        "id": 2565,
                         "name": "ElementaryTypeName",
                         "src": "284:7:14"
                       }
                     ],
-                    "id": 2426,
+                    "id": 2566,
                     "name": "VariableDeclaration",
                     "src": "284:11:14"
                   },
@@ -464,7 +464,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "_tokenId",
-                      "scope": 2439,
+                      "scope": 2579,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "uint256",
@@ -477,17 +477,17 @@
                           "name": "uint256",
                           "type": "uint256"
                         },
-                        "id": 2427,
+                        "id": 2567,
                         "name": "ElementaryTypeName",
                         "src": "297:7:14"
                       }
                     ],
-                    "id": 2428,
+                    "id": 2568,
                     "name": "VariableDeclaration",
                     "src": "297:16:14"
                   }
                 ],
-                "id": 2429,
+                "id": 2569,
                 "name": "ParameterList",
                 "src": "283:31:14"
               },
@@ -498,7 +498,7 @@
                   ]
                 },
                 "children": [],
-                "id": 2430,
+                "id": 2570,
                 "name": "ParameterList",
                 "src": "322:0:14"
               },
@@ -538,7 +538,7 @@
                               "isPure": false,
                               "lValueRequested": false,
                               "member_name": "_mint",
-                              "referencedDeclaration": 3366,
+                              "referencedDeclaration": 3506,
                               "type": "function (address,uint256)"
                             },
                             "children": [
@@ -548,16 +548,16 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 3869,
+                                  "referencedDeclaration": 4010,
                                   "type": "contract super ERC721TokenMock",
                                   "value": "super"
                                 },
-                                "id": 2431,
+                                "id": 2571,
                                 "name": "Identifier",
                                 "src": "328:5:14"
                               }
                             ],
-                            "id": 2433,
+                            "id": 2573,
                             "name": "MemberAccess",
                             "src": "328:11:14"
                           },
@@ -567,11 +567,11 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 2426,
+                              "referencedDeclaration": 2566,
                               "type": "address",
                               "value": "_to"
                             },
-                            "id": 2434,
+                            "id": 2574,
                             "name": "Identifier",
                             "src": "340:3:14"
                           },
@@ -581,31 +581,31 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 2428,
+                              "referencedDeclaration": 2568,
                               "type": "uint256",
                               "value": "_tokenId"
                             },
-                            "id": 2435,
+                            "id": 2575,
                             "name": "Identifier",
                             "src": "345:8:14"
                           }
                         ],
-                        "id": 2436,
+                        "id": 2576,
                         "name": "FunctionCall",
                         "src": "328:26:14"
                       }
                     ],
-                    "id": 2437,
+                    "id": 2577,
                     "name": "ExpressionStatement",
                     "src": "328:26:14"
                   }
                 ],
-                "id": 2438,
+                "id": 2578,
                 "name": "Block",
                 "src": "322:37:14"
               }
             ],
-            "id": 2439,
+            "id": 2579,
             "name": "FunctionDefinition",
             "src": "270:89:14"
           },
@@ -619,7 +619,7 @@
               ],
               "name": "burn",
               "payable": false,
-              "scope": 2452,
+              "scope": 2592,
               "stateMutability": "nonpayable",
               "superFunction": null,
               "visibility": "public"
@@ -631,7 +631,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "_tokenId",
-                      "scope": 2451,
+                      "scope": 2591,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "uint256",
@@ -644,17 +644,17 @@
                           "name": "uint256",
                           "type": "uint256"
                         },
-                        "id": 2440,
+                        "id": 2580,
                         "name": "ElementaryTypeName",
                         "src": "377:7:14"
                       }
                     ],
-                    "id": 2441,
+                    "id": 2581,
                     "name": "VariableDeclaration",
                     "src": "377:16:14"
                   }
                 ],
-                "id": 2442,
+                "id": 2582,
                 "name": "ParameterList",
                 "src": "376:18:14"
               },
@@ -665,7 +665,7 @@
                   ]
                 },
                 "children": [],
-                "id": 2443,
+                "id": 2583,
                 "name": "ParameterList",
                 "src": "402:0:14"
               },
@@ -701,7 +701,7 @@
                               "isPure": false,
                               "lValueRequested": false,
                               "member_name": "_burn",
-                              "referencedDeclaration": 3401,
+                              "referencedDeclaration": 3541,
                               "type": "function (uint256)"
                             },
                             "children": [
@@ -711,16 +711,16 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 3869,
+                                  "referencedDeclaration": 4010,
                                   "type": "contract super ERC721TokenMock",
                                   "value": "super"
                                 },
-                                "id": 2444,
+                                "id": 2584,
                                 "name": "Identifier",
                                 "src": "408:5:14"
                               }
                             ],
-                            "id": 2446,
+                            "id": 2586,
                             "name": "MemberAccess",
                             "src": "408:11:14"
                           },
@@ -730,41 +730,41 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 2441,
+                              "referencedDeclaration": 2581,
                               "type": "uint256",
                               "value": "_tokenId"
                             },
-                            "id": 2447,
+                            "id": 2587,
                             "name": "Identifier",
                             "src": "420:8:14"
                           }
                         ],
-                        "id": 2448,
+                        "id": 2588,
                         "name": "FunctionCall",
                         "src": "408:21:14"
                       }
                     ],
-                    "id": 2449,
+                    "id": 2589,
                     "name": "ExpressionStatement",
                     "src": "408:21:14"
                   }
                 ],
-                "id": 2450,
+                "id": 2590,
                 "name": "Block",
                 "src": "402:32:14"
               }
             ],
-            "id": 2451,
+            "id": 2591,
             "name": "FunctionDefinition",
             "src": "363:71:14"
           }
         ],
-        "id": 2452,
+        "id": 2592,
         "name": "ContractDefinition",
         "src": "174:262:14"
       }
     ],
-    "id": 2453,
+    "id": 2593,
     "name": "SourceUnit",
     "src": "0:436:14"
   },
@@ -774,5 +774,5 @@
   },
   "networks": {},
   "schemaVersion": "1.0.1",
-  "updatedAt": "2018-03-18T16:35:54.781Z"
+  "updatedAt": "2018-03-20T08:16:01.411Z"
 }

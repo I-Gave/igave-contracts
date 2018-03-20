@@ -75,8 +75,13 @@ contract('IGVCampaign Test', accounts => {
         campaignId.should.be.bignumber.equal(1);
       })
       it('Tracks the total campaigns', async () => {
-        const totalCampaigns = await dapp.totalCampaigns();
+        let totalCampaigns = await dapp.totalCampaigns();
 
+        totalCampaigns.should.be.bignumber.equal(0);
+
+        await dapp.createCampaign('Test Campaign', '501cid');
+
+        totalCampaigns = await dapp.totalCampaigns();
         totalCampaigns.should.be.bignumber.equal(1);
       })
       it('Tracks the campaign balance', async () => {
