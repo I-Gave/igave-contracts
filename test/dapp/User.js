@@ -22,11 +22,18 @@ contract('User Test', accounts => {
 
   describe('User', () => {
     describe('Campaigns', async () => {
-      it('Creates a new campaign', async () => {
-        await dapp.createCampaign('Test Campaign', '501cid', {from: mallory});
-        const newCampaign = await dapp.getCampaign(1);
+      beforeEach(async () => {
 
-        newCampaign[1].should.be.equal('Test Campaign')
+      })
+      it('Sets up two new campaign', async () => {
+        let total = await dapp.totalCampaigns()
+
+        await dapp.createCampaign('User\'s Campaign', '501cid', { from: user });
+        console.log(user)
+        console.log(await dapp.campaignIndexToOwner(1))
+        await dapp.createCertificate(1, 10, "User Test Certificate", 10e17, {from: user});
+        total = await dapp.totalCampaigns()
+        console.log(total.toNumber())
       })
     })
   })

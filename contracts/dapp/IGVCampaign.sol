@@ -12,16 +12,16 @@ contract IGVCampaign is IGVAsset, Ownable {
 
   uint256 public maxCertificates = 1000;
 
-  mapping (uint256 => address) public campaignIndexToOwner;
-  mapping (address => uint256[]) public campaignOwnerToIndexes;
-  mapping (address => uint256) public campaignOwnerTotalCampaigns;
-  mapping (uint256 => uint256) public campaignBalance;
-  mapping (uint256 => Certificate[]) public campaignCertificates;
-  mapping (uint256 => uint64) public campaignCertificateCount;
+  mapping (uint256 => address) public campaignIndexToOwner;         // owner address for campaign
+  mapping (address => uint256[]) public campaignOwnerToIndexes;     // list of campaign ids for address
+  mapping (address => uint256) public campaignOwnerTotalCampaigns;  // count of campaigns by owner
+  mapping (uint256 => uint256) public campaignBalance;              // current campaign balance
+  mapping (uint256 => Certificate[]) public campaignCertificates;   // list of certificates for each campaign
+  mapping (uint256 => uint64) public campaignCertificateCount;      // count of certificates for each campaign
 
-  event CreateCampaign(address indexed owner, uint256 campaignId);
+  event CreateCampaign(address indexed owner, uint256 indexed campaignId);
   event CreateCertificate(uint256 indexed campaignId, string name);
-  event CreateToken(uint256 campaignId, uint16 certificateIdx, uint16 remaining, uint256 price);
+  event CreateToken(uint256 indexed campaignId, uint16 indexed certificateIdx, address owner);
 
   struct Token {
     uint256 campaignId;
@@ -71,6 +71,8 @@ contract IGVCampaign is IGVAsset, Ownable {
 
     _mint(_owner, newTokenId);
 
+    CreateToken(_campaignId, _certificateIdx, _owner);
+
     return newTokenId;
   }
 
@@ -92,7 +94,7 @@ contract IGVCampaign is IGVAsset, Ownable {
       ready: false
     });
 
-    uint256 newCampaignId = campaigns.push(_campaign);
+    uint256 newCampaignId = campaigns.push(_campaign) - 1;
 
     campaignIndexToOwner[newCampaignId] = _owner;
     campaignOwnerToIndexes[_owner].push(newCampaignId);

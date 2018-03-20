@@ -28,6 +28,11 @@ contract('IGVCertificate Test', accounts => {
       it('Creates a new certificate', async () => {
         await dapp.createCertificate(1, 10, "Test Certificate", 10);
       })
+      it('Campaign certificate count increases', async () => {
+        await dapp.createCertificate(1, 10, "Test Certificate", 10);
+        const count = await dapp.campaignCertificateCount(1);
+        count.should.be.bignumber.equal(1);
+      })
       it('Gets a certificate', async () => {
         await dapp.createCertificate(1, 10, "Test Certificate", 10);
         const certificate = await dapp.getCertificate(1,0);
@@ -59,7 +64,14 @@ contract('IGVCertificate Test', accounts => {
         await dapp.vetoCampaign(1);
         await assertRevert(dapp.createCertificate(1, 10, "Test Certificate", 10));
       })
+      it('Cannot activate a campaign without certificates', async () => {
+        await assertRevert(dapp.activateCampaign(1))
+
+        await dapp.createCertificate(1, 10, "Test Certificate", 10);
+        dapp.activateCampaign(1)
+      })
       it('Cannot create a new certificate for an active campaign', async () => {
+        await dapp.createCertificate(1, 10, "Test Certificate", 10);
         await dapp.activateCampaign(1)
         await assertRevert(dapp.createCertificate(1, 10, "Test Certificate", 10));
       })

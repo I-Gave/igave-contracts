@@ -47,6 +47,28 @@ contract('IGVAsset Test', accounts => {
         totalRaised.should.be.bignumber.equal(10);
         campaignBalance.should.be.bignumber.equal(10);
       })
+      it('Total raised increases', async () => {
+        await dapp.createToken(1, 0, { value: 10 });
+
+        const totalRaised = await dapp.totalRaised();
+
+        totalRaised.should.be.bignumber.equal(10);
+      })
+      it('Campaign balance increases', async () => {
+        await dapp.createToken(1, 0, { value: 10 });
+        const campaignBalance = await dapp.getCampaignBalance(1);
+
+        campaignBalance.should.be.bignumber.equal(10);
+      })
+      it('Total Tokens decreases', async () => {
+        let certificate = await dapp.getCertificate(1,0);
+
+        certificate[1].should.be.bignumber.equal(certificate[2]);
+        await dapp.createToken(1, 0, { value: 10 });
+        certificate = await dapp.getCertificate(1, 0);
+
+        certificate[2].should.be.bignumber.equal(certificate[1].toNumber()-1);
+      })
     })
     describe('Fail Conditions', async () => {
       it('Cannot buy a token from an inactive campaign', async () => {
