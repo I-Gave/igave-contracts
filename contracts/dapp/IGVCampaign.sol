@@ -21,6 +21,7 @@ contract IGVCampaign is IGVAsset, Ownable {
 
   event CreateCampaign(address indexed owner, uint256 indexed campaignId);
   event CreateCertificate(uint256 indexed campaignId, string name);
+  event UpdateCertificate(uint256 indexed campaignId, uint16 indexed certificateIdx);
   event CreateToken(uint256 indexed campaignId, uint16 indexed certificateIdx, address owner);
 
   struct Token {
@@ -146,6 +147,8 @@ contract IGVCampaign is IGVAsset, Ownable {
     campaignCertificates[_campaignId][_certificateIdx].supply = _supply;
     campaignCertificates[_campaignId][_certificateIdx].name = _name;
     campaignCertificates[_campaignId][_certificateIdx].price = _price;
+
+    UpdateCertificate(_campaignId, _certificateIdx);
   }
 
   function withdrawCampaignBalance(uint256 _campaignId) public {
