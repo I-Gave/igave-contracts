@@ -5,6 +5,8 @@ import '../util/SafeMath.sol';
 import './IGVAsset.sol';
 
 contract IGVFundraiser is IGVAsset, Ownable {
+  using SafeMath for uint256;
+
   address public founderAddress; // Contract launcher
 
   Campaign[] campaigns; // Campaigns tracked by the dapp
@@ -70,7 +72,9 @@ contract IGVFundraiser is IGVAsset, Ownable {
       unitNumber: _unitNumber
     });
 
-    campaignCertificates[_campaignId][_certificateIdx].remaining--;
+    uint256 remaining = campaignCertificates[_campaignId][_certificateIdx].remaining;
+    campaignCertificates[_campaignId][_certificateIdx].remaining = remaining.sub(1);
+
     uint256 newTokenId = tokens.push(_token);
 
     _mint(_owner, newTokenId);
@@ -98,11 +102,12 @@ contract IGVFundraiser is IGVAsset, Ownable {
       ready: false
     });
 
-    uint256 newCampaignId = campaigns.push(_campaign) - 1;
+    uint256 newCampaignId = campaigns.push(_campaign);
+    newCampaignId = newCampaignId.sub(1);
 
     campaignIndexToOwner[newCampaignId] = _owner;
     campaignOwnerToIndexes[_owner].push(newCampaignId);
-    campaignOwnerTotalCampaigns[_owner] += 1;
+    campaignOwnerTotalCampaigns[_owner] = campaignOwnerTotalCampaigns[_owner].add(1);
 
     CreateCampaign(_owner, newCampaignId);
 
@@ -130,7 +135,7 @@ contract IGVFundraiser is IGVAsset, Ownable {
 
     uint256 certificateIndex = campaignCertificates[_campaignId].push(_certificate);
 
-    campaignCertificateCount[_campaignId]++;
+    campaignCertificateCount[_campaignId] = campaignCertificateCount[_campaignId].add(1);
 
     CreateCertificate(_campaignId, _name);
 
@@ -258,7 +263,7 @@ contract IGVFundraiser is IGVAsset, Ownable {
   }
 
   function totalCampaigns() public view returns (uint256) {
-    return campaigns.length - 1;
+    return campaigns.length.sub(1);
   }
 
   function getCampaignBalance(uint256 _campaignId) public view returns (uint256) {

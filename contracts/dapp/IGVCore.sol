@@ -1,8 +1,11 @@
 pragma solidity 0.4.19;
 
 import "./IGVFundraiser.sol";
+import "../util/SafeMath.sol";
 
 contract IGVCore is IGVFundraiser {
+  using SafeMath for uint256;
+
   uint256 public campaignEscrowAmount = 0; // Required escrow to create a campaign. Default, zero
   uint256 public totalRaised = 0;          // Total funds raised by the contract
 
@@ -22,7 +25,7 @@ contract IGVCore is IGVFundraiser {
     require(msg.value == campaignEscrowAmount);
 
     uint256 campaignId = _createCampaign(msg.sender, _campaignName, _taxid);
-    campaignBalance[campaignId] += campaignEscrowAmount;
+    campaignBalance[campaignId] = campaignBalance[campaignId].add(campaignEscrowAmount);
     return campaignId;
   }
   // Add a certificate to an existing campaign. Must be the campaign owner. Returns the new certificate index.
@@ -87,11 +90,11 @@ contract IGVCore is IGVFundraiser {
     require(certificate.remaining > 0);
     require(msg.value == uint256(certificate.price));
 
-    uint256 unitNumber = certificate.supply - certificate.remaining + 1;
+    uint256 unitNumber = certificate.supply.sub(certificate.remaining).add(1);
 
-    campaignBalance[_campaignId] += msg.value;
+    campaignBalance[_campaignId] = campaignBalance[_campaignId].add(msg.value);
 
-    totalRaised += msg.value;
+    totalRaised = totalRaised.add(msg.value);
 
     return _createToken(_campaignId, _certificateIdx, unitNumber, msg.sender, msg.value);
   }
@@ -126,7 +129,7 @@ contract IGVCore is IGVFundraiser {
     campaigns[_campaignId].owner = owner;
 
     Certificate[] storage certificates = campaignCertificates[_campaignId];
-    for (uint256 i = 0; i < certificates.length; i++) {
+    for (uint256 i = 0; i < certificates.length; i = i.add(1)) {
       delete certificates[i];
     }
     VetoCampaign(_campaignId);
