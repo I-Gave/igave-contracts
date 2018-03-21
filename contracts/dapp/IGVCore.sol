@@ -17,7 +17,7 @@ contract IGVCore is IGVFundraiser {
   )
     public
     payable
-    returns (uint)
+    returns (uint256)
   {
     require(msg.value == campaignEscrowAmount);
 
@@ -28,11 +28,11 @@ contract IGVCore is IGVFundraiser {
   // Add a certificate to an existing campaign. Must be the campaign owner. Returns the new certificate index.
   function createCertificate(
     uint256 _campaignId,
-    uint16 _supply,
+    uint256 _supply,
     string _name,
     uint256 _price
   ) public
-    returns (uint)
+    returns (uint256)
   {
     require(campaignIndexToOwner[_campaignId] == msg.sender);
     require(_campaignId > 0);
@@ -49,7 +49,7 @@ contract IGVCore is IGVFundraiser {
   function updateCertificate(
     uint256 _campaignId,
     uint256 _certificateIdx,
-    uint16 _supply,
+    uint256 _supply,
     string _name,
     uint256 _price
   )
@@ -69,7 +69,7 @@ contract IGVCore is IGVFundraiser {
   // Make a donation and issue the ERC-721 token for a campaign & certificate. Must include certificate price in tx.
   function createToken(
     uint128 _campaignId,
-    uint16 _certificateIdx
+    uint256 _certificateIdx
   )
     public
     payable
@@ -87,7 +87,7 @@ contract IGVCore is IGVFundraiser {
     require(certificate.remaining > 0);
     require(msg.value == uint256(certificate.price));
 
-    uint16 unitNumber = certificate.supply - certificate.remaining + 1;
+    uint256 unitNumber = certificate.supply - certificate.remaining + 1;
 
     campaignBalance[_campaignId] += msg.value;
 

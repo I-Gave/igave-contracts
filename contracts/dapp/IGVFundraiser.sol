@@ -30,8 +30,8 @@ contract IGVFundraiser is IGVAsset, Ownable {
     uint256 campaignId;
     uint256 value;
     address purchaser;
-    uint16 unitNumber;
-    uint16 certificateIdx;
+    uint256 unitNumber;
+    uint256 certificateIdx;
   }
 
   struct Campaign {
@@ -46,21 +46,21 @@ contract IGVFundraiser is IGVAsset, Ownable {
   struct Certificate {
     uint256 campaignId;
     uint256 price;
-    uint16 supply;
-    uint16 remaining;
+    uint256 supply;
+    uint256 remaining;
     string name;
   }
 
   // Issues an ERC-721 token
   function _createToken(
     uint256 _campaignId,
-    uint16 _certificateIdx,
-    uint16 _unitNumber,
+    uint256 _certificateIdx,
+    uint256 _unitNumber,
     address _owner,
     uint256 _value
   )
     internal
-    returns (uint)
+    returns (uint256)
   {
     Token memory _token = Token({
       campaignId: _campaignId,
@@ -87,7 +87,7 @@ contract IGVFundraiser is IGVAsset, Ownable {
     string _taxId
   )
     internal
-    returns (uint)
+    returns (uint256)
   {
     Campaign memory _campaign = Campaign({
       owner: _owner,
@@ -112,12 +112,12 @@ contract IGVFundraiser is IGVAsset, Ownable {
   // Adds a certificate to an inactive campaign
   function _createCertificate(
     uint256 _campaignId,
-    uint16 _supply,
+    uint256 _supply,
     string _name,
     uint256 _price
   )
     internal
-    returns (uint)
+    returns (uint256)
   {
 
     Certificate memory _certificate = Certificate({
@@ -141,7 +141,7 @@ contract IGVFundraiser is IGVAsset, Ownable {
   function _updateCertificate(
     uint256 _campaignId,
     uint256 _certificateIdx,
-    uint16 _supply,
+    uint256 _supply,
     string _name,
     uint256 _price
   )
@@ -225,17 +225,17 @@ contract IGVFundraiser is IGVAsset, Ownable {
   (
     uint256 campaignId,
     uint256 value,
-    uint16 unitNumber,
+    uint256 unitNumber,
     address purchaser,
-    uint16 certificateIdx
+    uint256 certificateIdx
   ){
     Token storage token = tokens[_id];
 
     campaignId = uint256(token.campaignId);
     value = uint256(token.value);
-    unitNumber = uint16(token.unitNumber);
+    unitNumber = uint256(token.unitNumber);
     purchaser = address(token.purchaser);
-    certificateIdx = uint16(token.certificateIdx);
+    certificateIdx = uint256(token.certificateIdx);
   }
 
   function getTotalCampaignsForOwner(address _owner)
