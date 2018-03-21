@@ -29,11 +29,8 @@ contract('User Test', accounts => {
         let total = await dapp.totalCampaigns()
 
         await dapp.createCampaign('User\'s Campaign', '501cid', { from: user });
-        console.log(user)
-        console.log(await dapp.campaignIndexToOwner(1))
         await dapp.createCertificate(1, 10, "User Test Certificate", 10e17, {from: user});
         total = await dapp.totalCampaigns()
-        console.log(total.toNumber())
       })
     })
   })

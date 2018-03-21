@@ -17,7 +17,7 @@ contract IGVFundraiser is IGVAsset, Ownable {
   mapping (address => uint256) public       campaignOwnerTotalCampaigns;  // count of campaigns by owner
   mapping (uint256 => uint256) public       campaignBalance;              // current campaign balance
   mapping (uint256 => Certificate[]) public campaignCertificates;         // list of certificates for each campaign
-  mapping (uint256 => uint64) public        campaignCertificateCount;     // count of certificates for each campaign
+  mapping (uint256 => uint256) public        campaignCertificateCount;     // count of certificates for each campaign
 
 
   event CreateCampaign(address indexed owner, uint256 indexed campaignId); // Campaign has been created
