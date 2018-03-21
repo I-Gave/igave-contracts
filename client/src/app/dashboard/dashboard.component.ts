@@ -45,7 +45,7 @@ export class DashboardComponent implements OnInit {
 
   async getLastCampaigns() {
     let total = 10;
-    let campaignId = this.totalCampaigns -1;
+    let campaignId = this.totalCampaigns;
 
     while (total >= 0 && campaignId >= 0) {
 
@@ -75,7 +75,7 @@ export class DashboardComponent implements OnInit {
       let tokenIdx = token[4].toNumber();
 
       let certificate = await this.instance.getCertificate(campaignId, tokenIdx);
-      console.log(token)
+
       let tokenName = token[3];
       let issueNumber = certificate[2].toNumber();
       let remaining = token[2].toNumber();

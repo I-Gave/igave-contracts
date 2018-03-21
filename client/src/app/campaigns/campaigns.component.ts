@@ -29,7 +29,7 @@ export class CampaignsComponent {
     let total = await instance.totalCampaigns.call();
     total = total.toNumber();
 
-    for (let i = 0; i <= total; i++) {
+    for (let i = 1; i <= total; i++) {
       let c = await instance.getCampaign(i);
 
       this.campaigns.push({

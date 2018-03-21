@@ -81,11 +81,15 @@ export class ManageCampaignsComponent {
       const igv = instance;
       let value = newToken.value * 10e18;
 
-      return igv.createCertificate(
+      console.log({
         id,
-        newToken.supply,
-        newToken.name,
+        supply: newToken.supply,
+        name: newToken.name,
         value,
+      })
+
+      return igv.createCertificate(
+        1, 10, "Test Certificate", 10,
         { from: account }
       );
     }).then(function (result) {

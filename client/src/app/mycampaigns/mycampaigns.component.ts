@@ -32,7 +32,7 @@ export class MyCampaignsComponent {
 
     for (let i = 0; i < totalCampaigns; i++) {
       let id = await instance.getCampaignIdByOwnerIndex.call(this.window.web3.eth.accounts[0], i);
-      id = id.toNumber() - 1;
+      id = id.toNumber();
 
       let c = await instance.getCampaign.call(id);
 
