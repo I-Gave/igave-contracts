@@ -89,7 +89,10 @@ export class ManageCampaignsComponent {
       })
 
       return igv.createCertificate(
-        1, 10, "Test Certificate", 10,
+        id,
+        newToken.supply,
+        newToken.name,
+        value,
         { from: account }
       );
     }).then(function (result) {

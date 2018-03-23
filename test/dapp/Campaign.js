@@ -18,7 +18,7 @@ contract('IGVFundraiser', accounts => {
   let escrow = null;
 
   beforeEach(async () => {
-    dapp = await DAPP.new()
+    dapp = await DAPP.new(creator)
     escrow = await dapp.campaignEscrowAmount();
   })
 

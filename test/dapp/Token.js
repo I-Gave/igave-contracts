@@ -17,7 +17,7 @@ contract('IGVAsset Test', accounts => {
   let dapp = null
 
   beforeEach(async () => {
-    dapp = await DAPP.new()
+    dapp = await DAPP.new(creator)
   })
 
   describe('IGVAsset', () => {
